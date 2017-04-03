@@ -1,0 +1,98 @@
+
+
+body{
+  background-color:black;
+}
+  .mainConatiner{
+
+  }
+  .board{
+    position: relative;
+    width: 1000px;
+    height: 1000px;
+    border: 1px solid black;
+    margin: 0 auto;
+
+  }
+  .gameBoard{
+
+      position: relative;
+      width: 350px;
+      height: auto;
+      background-color: rgba(0,0, 0, 0.5);
+      margin: 0 auto;
+  }
+  .header{
+    width: auto;
+    height: 70px;
+    margin-bottom:10px;
+  }
+  .cells{
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: rgba(0,0, 0, 0.5);
+    border: 1px solid rgba(50,50, 50, 0.5);
+    transition:.1s;
+    z-index: 3;
+  }
+  .cellsTodelete{
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: rgba(0,0, 0, 0.5);
+    border: 1px solid rgba(50,50, 50, 0.5);
+    z-index: 1;
+
+  }
+  .cellsImg{
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+
+  }
+  .header{
+    width: auto;
+    height: 70px;
+    background-color: inherit;
+  }
+  .sound{
+    font-size: 2em;
+    float: right;
+    cursor: pointer;
+  }
+
+  .colum{
+    width: 50px;
+    length:auto;
+  }
+  #test{
+    position: absolute;
+    top: 0px;
+    left: 300px;
+    width: 100px;
+    height:300px;
+    background-color: white;
+    z-index: 10;
+    display: none;
+  }
+  .scoreBoard{
+    width: 100px;
+    height: auto;
+    font-size: 2em;
+    position: absolute;
+    top:-70px;
+    left:0px;
+    color:black;
+    text-align: center;
+    border:1px solid white;
+    color: white;
+    background-color: inherit;
+
+
+
+  }
