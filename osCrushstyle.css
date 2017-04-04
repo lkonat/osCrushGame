@@ -32,6 +32,7 @@ body{
     height: 50px;
     text-align: center;
     vertical-align: middle;
+    line-height:50px;
     background-color: rgba(0,0, 0, 0.5);
     border: 1px solid rgba(50,50, 50, 0.5);
     transition:.1s;
@@ -96,3 +97,46 @@ body{
 
 
   }
+.rec{
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  /*top: -1050px;*/
+  top: -1050px;
+  left: 150px;
+  transform: rotate(0deg);
+  transform-origin: 0 0;
+  z-index: 10;
+
+
+}
+@keyframes play {
+  from {background-position: 0px ;}
+  to   {background-position: -1000px ;}
+   /*100% { background-position: 1000px ; }*/
+}
+.lightning{
+  background: url("lightning.png");
+  width: 130px;
+  height: 300px;;
+  position: absolute;
+  top: 180px;
+  left: 115px;
+
+  transform: rotate(30deg);
+  transform-origin: 50% 0;
+  z-index: 10;
+  background-repeat: no-repeat;
+  animation: play 0.5s steps(8) infinite;
+
+  /*background-repeat: no-repeat;
+  background-position: 0px 0px;
+  border: 1px solid white;
+  z-index: 10;
+  animation: play 0.8s steps(10) infinite;*/
+}
+.bullet{
+  width: 20px;
+  height: 20px;
+  z-index: 10;
+}
