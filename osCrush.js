@@ -14,7 +14,7 @@ var osCrush = (function(){
             function setGridManualy(prefered_Grid){
               grid=prefered_Grid;
               manual_grid=true;
-              
+
             }
             function randomizeGrid(){
               manual_grid=false;
@@ -114,7 +114,7 @@ function light(topA,leftA){
   //animée
   console.log($(".rec")[0].offsetTop);
   //if(parseInt($(".rec")[0].offsetTop)===150){
-    var elt=$("<div class='bullet'  style='position: absolute; top:175px; left:175px; '><img src='light.png' alt='' style=' width:inherit; height:inherit;'></div>");
+    var elt=$("<div class='bullet'  style='position: absolute; top:175px; left:175px; z-index:11; '><img src='light.png' alt='' style=' width:20px; height:20px; '></div>");
     $(".lightningBox").append(elt);
     elt.animate({
       left: leftA,
@@ -138,7 +138,6 @@ function crushAll(x,y){
         if(!y){
             grid[i][j]=-1;
         }else {
-          console.log("hhhhh");
           light(j*50+(25),i*50+(25));
         }
 
