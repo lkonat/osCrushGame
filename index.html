@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="osCrushstyle.css">
+    <link rel="stylesheet" href="oscrushstyle.css">
     <link rel="stylesheet" href="jquery-ui.min.css">
     <title></title>
 
@@ -35,7 +35,7 @@
           <div class="colum" id="c8"></div>
           <div class="scoreBoard" id="scoreBoard">Score:<span>00</span></div>
           <div class="rec">
-      <img src="light.png" alt="" style="width:inherit; height:inherit">
+            <img src="light.png" alt="" style="width:70px; height:70px;">
           </div>
           <div class="lightningBox"></div>
         </div>
@@ -99,7 +99,7 @@ setInterval(function(){animateCircles();},1500);
                   var elt =parseInt(osCrush.getGrid()[i][j]);
                   var t=j*cellsSize, l=i*cellsSize ;
                   if(elt===-3){
-                    $("#"+boardColumns[i]).append("<div class='cells' style='position: absolute; top:"+t+"px; left:"+l+"px;' value="+elt+"> <img class='cellsImg'   draggable='true' ondrop='drop(event)' ondragover='allowDrop(event)' src='Bill_gates.png' alt=''style='width:inherit; height:inherit;' value="+elt+"> </div>");
+                    $("#"+boardColumns[i]).append("<div class='cells' style='position: absolute; top:"+t+"px; left:"+l+"px;' value="+elt+"> <img class='cellsImg'   draggable='true' ondrop='drop(event)' ondragover='allowDrop(event)' src='Bill_Gates.png' alt=''style='width:inherit; height:inherit;' value="+elt+"> </div>");
                   }
                   else if(elt===-2){
                     $("#"+boardColumns[i]).append("<div class='cells' style='position: absolute; top:"+t+"px; left:"+l+"px;' value="+elt+"> <img class='cellsImg'   draggable='true' ondrop='drop(event)' ondragover='allowDrop(event)' src='steve_jobs.png' alt=''style='width:inherit; height:inherit;' value="+elt+"> </div>");
