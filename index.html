@@ -33,7 +33,7 @@
           <div class="colum" id="c6"></div>
           <div class="colum" id="c7"></div>
           <div class="colum" id="c8"></div>
-          <div class="scoreBoard" id="scoreBoard">00</div>
+          <div class="scoreBoard" id="scoreBoard">Score:<span>00</span></div>
           <div class="rec">
       <img src="light.png" alt="" style="width:inherit; height:inherit">
           </div>
@@ -274,7 +274,7 @@ function dropAnime1(){
 var score=0;
 function updateScore(x){
    score+=x;
-$(".scoreBoard").html(score);
+$(".scoreBoard span").html(score);
 }
 var totalPoint=0;
 function createBubbles(t,l,point){

@@ -4,13 +4,12 @@ body{
   background-color:black;
 }
   .mainConatiner{
-
+   
   }
   .board{
     position: relative;
     width: 1000px;
-    height: 1000px;
-    border: 1px solid black;
+    height: auto;
     margin: 0 auto;
 
   }
@@ -82,19 +81,18 @@ body{
     display: none;
   }
   .scoreBoard{
-    width: 100px;
+    width: auto;
     height: auto;
     font-size: 2em;
     position: absolute;
     top:-70px;
-    left:0px;
+    left:-30px;
     color:black;
     text-align: center;
-    border:1px solid white;
     color: white;
     background-color: inherit;
-
-
+    border: 1px solid white;
+    z-index: 30;
 
   }
 .rec{
