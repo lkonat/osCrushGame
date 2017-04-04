@@ -34,6 +34,10 @@
           <div class="colum" id="c7"></div>
           <div class="colum" id="c8"></div>
           <div class="scoreBoard" id="scoreBoard">00</div>
+          <div class="rec">
+      <img src="light.png" alt="" style="width:inherit; height:inherit">
+          </div>
+          <div class="lightningBox"></div>
         </div>
 
       </div>
@@ -42,7 +46,7 @@
       <script src="jquery-3.1.1.min.js"></script>
       <script src="d3.min.js"></script>
       <script src="jquery-ui.min.js"></script>
-        <script type="text/javascript" src="osCrush2.js"> </script>
+        <script type="text/javascript" src="osCrush.js"> </script>
     <script type="text/javascript">
     var once=false;
   function animateCircles(){
@@ -94,8 +98,18 @@ setInterval(function(){animateCircles();},1500);
                 for(var j =0; j<osCrush.getGrid()[i].length; j++){
                   var elt =parseInt(osCrush.getGrid()[i][j]);
                   var t=j*cellsSize, l=i*cellsSize ;
-                  if(elt===-1){
-                    $("#"+boardColumns[i]).append("<div class='cellsTodelete' style='position: absolute; top:"+t+"px; left:"+l+"px;' value="+elt+"> <img class='cellsImg'   draggable='true' ondrop='drop(event)' ondragover='allowDrop(event)' src='gif.gif' alt=''style='width:inherit; height:inherit;' value="+elt+"> </div>");
+                  if(elt===-3){
+                    $("#"+boardColumns[i]).append("<div class='cells' style='position: absolute; top:"+t+"px; left:"+l+"px;' value="+elt+"> <img class='cellsImg'   draggable='true' ondrop='drop(event)' ondragover='allowDrop(event)' src='Bill_gates.png' alt=''style='width:inherit; height:inherit;' value="+elt+"> </div>");
+                  }
+                  else if(elt===-2){
+                    $("#"+boardColumns[i]).append("<div class='cells' style='position: absolute; top:"+t+"px; left:"+l+"px;' value="+elt+"> <img class='cellsImg'   draggable='true' ondrop='drop(event)' ondragover='allowDrop(event)' src='steve_jobs.png' alt=''style='width:inherit; height:inherit;' value="+elt+"> </div>");
+                  }
+                  else if(elt===-1){
+                  //  light(t,l);
+                    var eld=$("<div class='cellsTodelete' style='position: absolute; top:"+t+"px; left:"+l+"px;' value="+elt+"> <img class='cellsImg'   draggable='true' ondrop='drop(event)' ondragover='allowDrop(event)' src='gif.gif' alt=''style='width:inherit; height:inherit;' value="+elt+"> </div>");
+
+                    $("#"+boardColumns[i]).append(eld);
+
                   }else if(elt===0){
                     $("#"+boardColumns[i]).append("<div class='cells' style='position: absolute; top:"+t+"px; left:"+l+"px;' value="+elt+"> <img class='cellsImg'   draggable='true' ondrop='drop(event)' ondragover='allowDrop(event)' src="+iconArray[elt]+" alt='' value="+elt+"> </div>");
                   }else if (elt===1) {
@@ -121,8 +135,10 @@ var mouse_down_trigered=false;
               $(".gameBoard").click(function(e){
                 if(e.target.localName==="img"){
                   $( e.target).animate({  width: "+=15", height: "+=15"},300,function() {
-                    console.log( "done!" );
-                    $( e.target).animate({  width: "-=15", height: "-=15"},300,function() {console.log( "done!" );});
+
+                    $( e.target).animate({  width: "-=15", height: "-=15"},300,function() {
+                      //console.log( "done!" );
+                    });
                   });
                 }
               });
@@ -130,15 +146,44 @@ var mouse_down_trigered=false;
 
               $(".gameBoard").mousedown(function(e){
                 if(e.target.localName==="img"){
-                  console.log(osCrush.lastTargetObtained());
-                  if(osCrush.lastTargetObtained()==="first"){
+                  if(e.target.attributes.value.value==="-2"){
+                    $(".rec").animate({left:"150px",top:"150px"},500,function(){
+                         //delete all apple;
+                         osCrush.crushAll("1","1");
+                        setTimeout(function(){osCrush.crushAll("1");},700);
+                         setTimeout(function(){
+                           osCrush.crushAll("-2");
+                           $(".rec").animate({left:"150px",top:"-1150px"},500,function(){});
+
+                       },1000); //delete Steve Jobs
+                    });
+                    return;
+                  }
+                  if(e.target.attributes.value.value==="-3"){
+                    $(".rec").animate({left:"150px",top:"150px"},500,function(){
+                         //delete all windows;
+                         osCrush.crushAll("5","1");
+                        setTimeout(function(){osCrush.crushAll("5");;},700);
+                         setTimeout(function(){
+                           osCrush.crushAll("-3");
+                           $(".rec").animate({left:"150px",top:"-1150px"},500,function(){});
+
+                       },1000); //delete Bill Gate
+                    });
+
+                    return;
+                  }
+                  //console.log(osCrush.lastTargetObtained());
+                  if(condition_first ){ //osCrush.lastTargetObtained()==="first"
                     first_target=e;
                     //myFirst_target.set(e);
                     osCrush.setFirstTarget(e);
                     //condition_first=false;
-                    osCrush.obtainedTarget(1,e);
+                    //osCrush.obtainedTarget(1,e);
+                    condition_first =false;
                   }else {
                     //then second condition, second click
+                    condition_first=true;
                     second_target=e;
                     osCrush.setSecondTarget(e);
                   //  flip_with_FirstTrarget(myFirst_target,e);
@@ -147,7 +192,8 @@ var mouse_down_trigered=false;
                     if(!osCrush.checkGrid("just_simulation")){
                       setTimeout(function(){similation_failed();},250);
                     }
-                    osCrush.obtainedTarget(2,e);
+                    //osCrush.obtainedTarget(2,e);
+
                   }
                 }else {
                   console.log("error");
@@ -165,7 +211,8 @@ var mouse_down_trigered=false;
                 if(!osCrush.checkGrid("just_simulation")){
                   setTimeout(function(){similation_failed();},250);
                 }
-                 osCrush.obtainedTarget(2,e);
+                 //osCrush.obtainedTarget(2,e);
+                 condition_first=true;
                }else {
                  console.log('error');
                }
@@ -237,32 +284,32 @@ function createBubbles(t,l,point){
   $(".gameBoard").append("<p style='z-index:10; color:"+col[rand]+"; font-size:1.5em; position:absolute; top:"+t+"px; left:"+l+"px;'>+"+point+"</p>");
   //console.log($(".gameBoard")[0].lastChild);
   $($(".gameBoard")[0].lastChild).animate({
-        left: '100px',
+        left: '107px',
         top: '-85px'
-    },600,function(){
+    },500,function(){
       $(this).remove();
-      if(totalPoint!==0){
-        $(".gameBoard").append("<p style='z-index:10; color:lightblue; font-size:1.5em;position:absolute; top:"+(-85)+"px; left:"+109+"px;'>+"+totalPoint+"</p>");
+      //if(totalPoint!==0){
+        $(".gameBoard").append("<p style='z-index:10; color:lightblue; font-size:1.5em;position:absolute; top:"+(-90)+"px; left:"+109+"px;'><img src='light.png' style='width:40px; height:40px;'></img></p>");
          updateScore(totalPoint);
          totalPoint=0;
 
-      }
+    //  }
         $($(".gameBoard")[0].lastChild).animate({
               left: '50px',
-              top: '-85px'
+              top: '-90px'
           },500,function(){
             $(this).remove();
-             $(".scoreBoard").animate({
-               //left: '-=10',
-               fontSize: '+=10px'
-             },100,function(){
-               $(this).animate({
-                 //left: '+=10',
-                 fontSize: '-=10px'
-                // height: '-=10px'
-              },100);
 
-             });
+              $(".scoreBoard").animate({
+                color: 'red'
+              },10,function(){
+                $(this).animate({
+                  color: 'white'
+               },10);
+
+              });
+
+
           });
     });
 }
@@ -291,7 +338,11 @@ function updateGrid(){
 //   }
 // }
 function similation_failed(){
-  if(osCrush.obtainedTarget("return")===2){
+  if(first_target && second_target){//osCrush.obtainedTarget("return")===2
+  console.log(first_target.target);
+  console.log(($(first_target.target).parents()[1].id));
+  console.log(first_target.target);
+  console.log(($(second_target.target).parents()[1].id));
     osCrush.setFirstTarget(first_target);
     osCrush.setSecondTarget(second_target);
     osCrush.flipTargets();
@@ -301,14 +352,42 @@ function similation_failed(){
 }
 
 var interval =setInterval(function(){
-  dropAnime1();
-  updateGrid();
-osCrush.checkGrid();
+
+ dropAnime1();
+ updateGrid();
+ osCrush.checkGrid();
+
 
   //test(); //this is just for a test to see the grid
+
 },250);
-
-
+function run(){
+  dropAnime1();
+  updateGrid();
+  osCrush.checkGrid();
+  //console.log("ffff");
+}
+// function light(topA,leftA){
+//   //animée
+//   console.log($(".rec")[0].offsetTop);
+//   if(parseInt($(".rec")[0].offsetTop)===150){
+//     var elt=$("<div class='bullet'  style='position: absolute; top:150px; left:150px; '><img src='ball.png' alt='' style=' width:inherit; height:inherit;'></div>");
+//     $(".lightningBox").append(elt);
+//     elt.animate({
+//       left: leftA,
+//       top: topA
+//     },500, function(){
+//       $(this).remove();
+//       //interval= setInterval(function(){run();},250);
+//     });
+//     //$(".lightning").css({"transform": "rotate("+(-1*x)+"deg)"});
+//
+//     //
+//   }
+// //  clearInterval(interval);
+//
+// }
     </script>
+
   </body>
 </html>
