@@ -36,8 +36,8 @@
   position: fixed;
   bottom: 210px;
   left: 170px;
-  -ms-transform: rotate(-25deg); /* IE 9 */
-  -webkit-transform: rotate(-25deg); /* Chrome, Safari, Opera */
+  /-ms-transform: rotate(-25deg);
+  -webkit-transform: rotate(-25deg);
   transform: rotate(-25deg);
   -webkit-animation:spin 4s linear infinite;
   -moz-animation:spin 4s linear infinite;
@@ -99,7 +99,7 @@
   position: fixed;
   text-shadow: 2px 4px gray;
   top: 0%;
-  left: 17%;
+  left: 23%;
   width: auto;
   height: auto;
   color: #4df6ff;
