@@ -58,7 +58,7 @@
 
 .windows {
   position: fixed;
-  bottom: 430px;
+  bottom: 400px;
   left: 17px;
   -ms-transform: rotate(-25deg); /* IE 9 */
   -webkit-transform: rotate(-25deg); /* Chrome, Safari, Opera */
