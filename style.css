@@ -3,6 +3,12 @@
   height: 800px;
 }
 
+.icons {
+  position: fixed;
+  bottom: 100px;
+  border; 1px solid red;
+}
+
 .android {
   position: fixed;
   bottom: 410px;
