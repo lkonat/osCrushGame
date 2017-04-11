@@ -6,6 +6,8 @@
 .icons {
   position: fixed;
   bottom: 100px;
+  width: auto;
+  height: auto;
   border; 1px solid red;
 }
 
