@@ -4,8 +4,8 @@
 }
 
 .icons {
-  position: fixed;
-  bottom: 100px;
+  position: relative;
+  bottom: 10px;
   width: auto;
   height: auto;
   border; 1px solid red;
