@@ -1,6 +1,10 @@
 var osCrush = (function(){
   var gridListener=[];
   var flipListenner=[];
+  var crushAll_effect=[];
+  var change_positions=[];
+  var goal1=[];
+  var tesla_crush=[];
   var manual_grid=false;
   var iconArray=["android.png","apple.png","freebsd.png","linux.png","ubuntu.png","windows.png"];
   var  grid=[       [0,0,0,0,0,0,0],
@@ -32,6 +36,45 @@ var osCrush = (function(){
               }
               if(type==="flipListenner"){
                 flipListenner.push(view);
+              }
+              if(type==="crushAll_effect"){
+                crushAll_effect.push(view);
+              }if(type==="change_positions"){
+                change_positions.push(view);
+              } if(type==="goal1"){
+                goal1.push(view);
+              }
+              if(type==="tesla_crush"){
+                tesla_crush.push(view);
+              }
+
+            }
+            function notify_tesla_crush(t,l){
+              for(var i=0;i<tesla_crush.length; i++){
+                var f=tesla_crush[i];
+                f(t,l);
+
+              }
+            }
+            function notify_Goal1_effect(t,l,type){
+              for(var i=0;i<goal1.length; i++){
+                var f=goal1[i];
+                f(t,l,type);
+
+              }
+            }
+            function notify_css_position(targetA,targetB){
+              for(var i=0;i<change_positions.length; i++){
+                var f=change_positions[i];
+                f(targetA,targetB);
+
+              }
+            }
+            function notify_crushAll_effect(topA,leftA){
+              for(var i=0;i<crushAll_effect.length; i++){
+                var f=crushAll_effect[i];
+                f(topA,leftA);
+
               }
             }
           function notifyGrid(){
@@ -93,70 +136,32 @@ var csp=0;
 function is_special_event(x,y){
   csp++;
 
-  if( csp>=10 && (!has_grid("-2") && !has_grid("-3"))){ //
-    var rand=Math.floor((Math.random() * 3) + 2);
-    console.log(rand);
-    if(rand===2 || rand===3){
+  if( csp>=10 && (!has_grid("-2") && !has_grid("-3") && !has_grid("-4"))){ //
+    var rand=Math.floor((Math.random() * 4) + 2);
+    if(rand===2 || rand===3 ||  rand===4){
       grid[x][y]=-1*rand;
-
     }
     csp=0;
   }
-  //var rand=Math.floor((Math.random() * 3) + 0);
-  // if(rand===2){
-  //   grid[x][y]=-2;
-  // }
 }
 
-
-
-function light(topA,leftA){
-  //animée
-  console.log($(".rec")[0].offsetTop);
-  //if(parseInt($(".rec")[0].offsetTop)===150){
-    var elt=$("<div class='bullet'  style='position: absolute; top:175px; left:175px; z-index:11; '><img src='light.png' alt='' style=' width:20px; height:20px; '></div>");
-    $(".lightningBox").append(elt);
-    elt.animate({
-      left: leftA,
-      top: topA
-    },700, function(){
-      $(this).remove();
-      //interval= setInterval(function(){run();},250);
-    });
-    //$(".lightning").css({"transform": "rotate("+(-1*x)+"deg)"});
-
-    //
-//  }
-//  clearInterval(interval);
-
-}
 function crushAll(x,y){
   for(var i =0; i<grid.length; i++){
     for(var j =0; j<grid[i].length; j++){
       if(grid[i][j]===x){
-
         if(!y){
             grid[i][j]=-1;
         }else {
-          light(j*50+(25),i*50+(25));
+          notify_crushAll_effect(j*50+(25),i*50+(25));
         }
-
-
-        //animée
-        // var angle_radians=Math.atan2(i*50, j*50);
-        // var degrees = angle_radians * (180/Math.PI);
-        // var x=90+degrees;
-        // $(".lightningBox").append("<div class='lightning'  style='transform: rotate("+(-1*x)+"deg)'></div>");
-        // //$(".lightning").css({"transform": "rotate("+(-1*x)+"deg)"});
-
-        //
-
       }
     }
   }
 
   notifyGrid();
-  //crushAll("-2");
+}
+function crushAll_tesla(x,y){
+  notify_tesla_crush(x,y);
 }
 function has_grid(x){
   for(var i =0; i<grid.length; i++){
@@ -181,11 +186,20 @@ function checkGrid(what){
         return true;
       }
       find_any=true;
+      if(n>=4){
+        //console.log("4 matches row");
+        //in grid[i][j];
+        var type =grid[i][j];
+        if(type && type >=0){
+          //console.log("type... "+type);
+            notify_Goal1_effect(i,j,type);
+        }
+      }
         for(var w =j; w<j+n; w++ ){
           grid[i][w]=-1;
-
           notifyGrid();
           is_special_event(i,w);
+
         }
       }
       if(n2>=3){
@@ -194,11 +208,21 @@ function checkGrid(what){
           return true;
         }
         find_any=true;
+        if(n2>=4){
+          //console.log("4 matches colll");
+          var type =grid[i][j];
+          if(type && type >=0){
+          //  console.log("type... "+type);
+              notify_Goal1_effect(i,j,type);
+          }
+
+        }
           for(var w =i; w<i+n2; w++ ){
             grid[w][j]=-1;
 
             notifyGrid();
             is_special_event(i,w);
+
           }
       }
     }
@@ -231,7 +255,6 @@ function checkGrid(what){
       var elt_position=(parseInt($($(e.target).parents()[0]).css("top"))/50);
       this.id2= ($($(e.target).parents()[1])[0].children[elt_position+1]);
       this.id_up= ($($(e.target).parents()[1])[0].children[elt_position-1]);
-      //console.log(this.top,this.id_string);
     };
     this.getInstances=function(){
       return {target:this.target,id:this.id, id_temp:this.id_temp,top:this.top, left:this.left};
@@ -252,15 +275,6 @@ function checkGrid(what){
   function getFirstTarget(){
     return target1.getInstances();
   }
-
-   function change_css_positions(targetA,targetB){
-     var tp =($(targetB.target).css("top"));
-     var lt =($(targetB.target).css("left"));
-     $(targetA.id).css("top",tp);
-     $(targetA.id).css("left",lt);
-     $(targetB.target).css("top",targetA.top);
-    $(targetB.target).css("left",targetA.left);
-   }
    var condition_first=true;
    var memory={
      firstTarget:false,
@@ -299,7 +313,7 @@ function checkGrid(what){
     }else {
       $($(targetA.id2)).before($(targetB.target));
     }
-    change_css_positions(targetA,targetB);
+    notify_css_position(targetA,targetB);
    }else {
       var diff_top =(parseInt(targetB.top)-targetA.top);
       if(diff_top>0){
@@ -307,7 +321,8 @@ function checkGrid(what){
       }else {
        $($(targetB.target)).before($(targetA.id));
      }
-     change_css_positions(targetA,targetB);
+
+     notify_css_position(targetA,targetB);
    }
   }
 
@@ -333,6 +348,8 @@ function checkGrid(what){
     obtainedTarget:obtainedTarget,
     crushAll:crushAll,
     has_grid:has_grid,
-    setGridManualy:setGridManualy
+    setGridManualy:setGridManualy,
+    crushAll_tesla:crushAll_tesla,
+    notifyGrid:notifyGrid
   };
 })();
