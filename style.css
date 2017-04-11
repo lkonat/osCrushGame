@@ -30,14 +30,14 @@
 
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
-@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(850deg); } }
 
 .linux {
   position: fixed;
   bottom: 210px;
   left: 170px;
-  -ms-transform: rotate(-25deg); /* IE 9 */
-  -webkit-transform: rotate(-25deg); /* Chrome, Safari, Opera */
+  /-ms-transform: rotate(-25deg);
+  -webkit-transform: rotate(-25deg);
   transform: rotate(-25deg);
   -webkit-animation:spin 4s linear infinite;
   -moz-animation:spin 4s linear infinite;
@@ -88,6 +88,8 @@
   /*opacity: 0.6;*/
   position: relative;
   filter: blur(2px);
+  position: fixed;
+  margin-top: -300px;
 }
 
 .welcome {
@@ -97,7 +99,7 @@
   position: fixed;
   text-shadow: 2px 4px gray;
   top: 0%;
-  left: 17%;
+  left: 23%;
   width: auto;
   height: auto;
   color: #4df6ff;
