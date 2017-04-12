@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="oscrushstyle.css">
+    <link rel="stylesheet" href="jquery-ui.min.css">
+    <title></title>
+
+  </head>
+  <body>
+
+    <div id="test">
+
+    </div>
+    <div class="mainConatiner">
+      <div class="board">
+        <div class="header">
+        <div class="sound" value="1" title="It's On!">&#x1f50a;</div>
+
+
+        </div>
+        <div class="gameBoard" >
+          <div class="colum" id="c1"></div>
+          <div class="colum" id="c2"></div>
+          <div class="colum" id="c3"></div>
+          <div class="colum" id="c4"></div>
+          <div class="colum" id="c5"></div>
+          <div class="colum" id="c6"></div>
+          <div class="colum" id="c7"></div>
+          <div class="colum" id="c8"></div>
+          <div class="circuit"></div>
+          <div class="scoreBoard" id="scoreBoard">Score<br><span>00</span></div>
+          <div class="goalBoard" id="goalBoard">Goal: Get each OS</div>
+          <div class="rec">
+            <img src="light.png" alt="" style="width:70px; height:70px;">
+          </div>
+          <div class="lightningBox"></div>
+        </div>
+
+      </div>
+
+    </div>
+      <script src="jquery-3.1.1.min.js"></script>
+      <script src="d3.min.js"></script>
+      <script src="jquery-ui.min.js"></script>
+        <script type="text/javascript" src="modelTest.js"> </script>
+    <script type="text/javascript">
+    var once=false;
+    $( document ).tooltip();
+    $( ".sound" ).tooltip({
+      classes: {
+        "ui-tooltip": "highlight"
+      }
+    });
+    var size=30;
+    var cellsSize=50;
+    var startPointLeft=false;
+    var startPointTop=false;
+    var endPointTop=false;
+    var endPointLeft=false;
+    var iconArray=osCrush.getIconArray();
+    var boardColumns=["c1","c2","c3","c4","c5","c6","c7","c8"];
+    var iconArray=["android.png","apple.png","freebsd.png","linux.png","ubuntu.png","windows.png"];
+    function clearBoard(){
+      for(var i =0; i<8; i++){
+        $("#c"+i).empty();
+      }
+    }
+              osCrush.addListener("gridListener", function(){
+                clearBoard();
+                for(var i =0; i<osCrush.getGrid().length; i++){
+                for(var j =0; j<osCrush.getGrid()[i].length; j++){
+                  var elt =parseInt(osCrush.getGrid()[i][j]);
+                  var t=j*cellsSize, l=i*cellsSize ;
+                  if(elt===-12){
+                    $("#"+boardColumns[i]).append("<div class='cells' style='position: absolute; top:"+t+"px; left:"+l+"px;' value="+elt+"> <img class='cellsImg2'   draggable='false' src='gif.gif' alt=''style='width:inherit; height:inherit;' value="+elt+"> </div>");
+                  }
+                  else if(elt===-4){
+                    $("#"+boardColumns[i]).append("<div class='cells' style='position: absolute; top:"+t+"px; left:"+l+"px;' value="+elt+"> <img class='cellsImg2'   draggable='false' src='tesla.png' alt=''style='width:inherit; height:inherit;' value="+elt+"> </div>");
+                  }
+                  else if(elt===-3){
+                    $("#"+boardColumns[i]).append("<div class='cells' style='position: absolute; top:"+t+"px; left:"+l+"px;' value="+elt+"> <img class='cellsImg2'   draggable='false'  src='gates.png' alt=''style='width:inherit; height:inherit;' value="+elt+"> </div>");
+                  }
+                  else if(elt===-2){
+                    $("#"+boardColumns[i]).append("<div class='cells' style='position: absolute; top:"+t+"px; left:"+l+"px;' value="+elt+"> <img class='cellsImg2'   draggable='false'  src='steve_jobs.png' alt=''style='width:inherit; height:inherit;' value="+elt+"> </div>");
+                  }
+                  else if(elt===-1){
+                  //  light(t,l);
+                    var eld=$("<div class='cellsTodelete' style='position: absolute; top:"+t+"px; left:"+l+"px;' value="+elt+"> <img class='cellsImg2'   draggable='false'  src='gif.gif' alt=''style='width:inherit; height:inherit;' value="+elt+"> </div>");
+                    $("#"+boardColumns[i]).append(eld);
+                  }else if(elt===0){
+                    $("#"+boardColumns[i]).append("<div class='cells' style='position: absolute; top:"+t+"px; left:"+l+"px;' value="+elt+"> <img class='cellsImg'    draggable='false'  src="+iconArray[elt]+" alt='' value="+elt+"> </div>");
+                  }else if (elt===1) {
+                    $("#"+boardColumns[i]).append("<div class='cells' style='position: absolute; top:"+t+"px; left:"+l+"px;' value="+elt+"> <img class='cellsImg'    draggable='false' src="+iconArray[elt]+" alt=''value="+elt+"> </div>");
+                  }else if (elt===2) {
+                     $("#"+boardColumns[i]).append("<div class='cells' style='position: absolute; top:"+t+"px; left:"+l+"px;' value="+elt+"> <img class='cellsImg'   draggable='false' src="+iconArray[elt]+" alt='' value="+elt+"> </div>");
+                  }else if (elt===3) {
+                     $("#"+boardColumns[i]).append("<div class='cells' style='position: absolute; top:"+t+"px; left:"+l+"px;' value="+elt+"> <img class='cellsImg'   draggable='false'  src="+iconArray[elt]+" alt='' value="+elt+"> </div>");
+                  }else if (elt===4) {
+                     $("#"+boardColumns[i]).append("<div class='cells' style='position: absolute; top:"+t+"px; left:"+l+"px;' value="+elt+"> <img class='cellsImg'   draggable='false'  src="+iconArray[elt]+" alt='' value="+elt+"> </div>");
+                  }else if (elt===5) {
+                     $("#"+boardColumns[i]).append("<div class='cells' style='position: absolute; top:"+t+"px; left:"+l+"px;' value="+elt+"> <img class='cellsImg'   draggable='false'  src="+iconArray[elt]+" alt='' value="+elt+"> </div>");
+                  }
+                }
+              }
+            });
+var condition_first=true;
+var first_target=false;
+var second_target=false;
+var mouse_down_trigered=false;
+           var startX=false;
+           var startY=false;
+                    $("div.gameBoard ").on('mousedown',"img",function(e){
+                      startX=e.clientX;
+                      startY =e.clientY;
+                      if(e.target.className==="cellsImg"){
+                        //console.log(osCrush.lastTargetObtained());
+                        if(condition_first ){ //osCrush.lastTargetObtained()==="first"
+                          first_target=e;
+                          osCrush.setFirstTarget(e);
+                          condition_first =false;
+                        }else {
+                          //then second condition, second click
+                          if(first_target){ //making sure we click the right element to avoid error
+                            if(!first_target.target.offsetParent){return;}
+                            var first_target_value=(first_target.target.offsetParent.attributes.value.value);
+                            var second_target_value=(e.target.offsetParent.attributes.value.value);
+                            if(first_target_value ===second_target_value){ return;}
+                          }else {
+                            console.log("first_target error");
+                            first_target=false;
+                            return;
+                          }
+                          condition_first=true;
+                          second_target=e;
+                          osCrush.setSecondTarget(e);
+                        //  flip_with_FirstTrarget(myFirst_target,e);
+                          osCrush.flipTargets();
+                          updateGrid();
+                          if(!osCrush.checkGrid("just_simulation")){
+                            setTimeout(function(){similation_failed();},250);
+                          }
+                        }
+                      }else if (e.target.className==="cellsImg2") {
+                        if(e.target.attributes.value.value==="-2"){
+                          $(".rec").animate({left:"150px",top:"150px"},500,function(){
+                               //delete all apple;
+                               osCrush.crushAll("1","1");
+                              setTimeout(function(){osCrush.crushAll("1");},700);
+                               setTimeout(function(){
+                                 osCrush.crushAll("-2");
+                                 $(".rec").animate({left:"150px",top:"-1150px"},500,function(){});
+                             },1000); //delete Steve Jobs
+                          });
+                          return;
+                        }
+                        if(e.target.attributes.value.value==="-3"){
+                          $(".rec").animate({left:"150px",top:"150px"},500,function(){
+                               //delete all windows;
+                               osCrush.crushAll("5","1");
+                              setTimeout(function(){osCrush.crushAll("5");;},700);
+                               setTimeout(function(){
+                                 osCrush.crushAll("-3");
+                                 $(".rec").animate({left:"150px",top:"-1150px"},500,function(){});
+                             },1000); //delete Bill Gate
+                          });
+                          return;
+                        }
+                        if(e.target.attributes.value.value==="-4"){ //lateral
+                          var itsTop=e.target.offsetParent.offsetTop;
+                          var istLeft=e.target.offsetParent.offsetLeft;
+                          osCrush.crushAll_tesla(itsTop,istLeft);
+                          return;
+                        }
+                      }
+                      else {
+                        console.log("error");
+                      }
+                    });
+              $("div.gameBoard").on('mouseup',"img",function(e){
+                var x = e.clientX ;     // Get the horizontal coordinate
+                var y = e.clientY;
+                var diff_t=y-startY;
+                var diff_l=x-startX;
+                  //console.log(e.target.localName,diff_t,diff_l);
+                if(diff_t===0 && diff_l===0 && e.target.localName==="img"){
+                  $( e.target).animate({  width: "+=15", height: "+=15"},300,function() {
+                    $( e.target).animate({  width: "-=15", height: "-=15"},300,function() {
+                      //console.log( "done!" );
+                    });
+                  });
+                  return;
+                }else {
+                  if(!condition_first){
+                    if(e.target.className ==="cellsImg"){
+                      second_target=e;
+                      osCrush.setSecondTarget(e);
+                      osCrush.flipTargets();
+                      updateGrid();
+                    if(!osCrush.checkGrid("just_simulation")){
+                      setTimeout(function(){similation_failed();},250);
+                    }
+                     //osCrush.obtainedTarget(2,e);
+                     condition_first=true;
+                   }else {
+                     console.log('error');
+                   }
+                  }
+                }
+              });
+              function drop(e) {
+               //
+              //   if(e.target.localName ==="img"){
+              //     second_target=e;
+              //     osCrush.setSecondTarget(e);
+              //     osCrush.flipTargets();
+              //     updateGrid();
+              //   if(!osCrush.checkGrid("just_simulation")){
+              //     setTimeout(function(){similation_failed();},250);
+              //   }
+              //    //osCrush.obtainedTarget(2,e);
+              //    condition_first=true;
+              //  }else {
+              //    console.log('error');
+              //  }
+              }
+              function allowDrop(event) {
+                 event.preventDefault();
+              }
+              $(".sound").click(function(e){
+                $(this).empty();
+                if($(this)[0].attributes.value.value==="1"){
+                    $(this).append("&#x1f507;");
+                    $(this)[0].attributes.value.value=0;
+                      $( ".sound").tooltip( "option", "content", "It's Off!" );
+                }else {
+                  $(this).append("&#x1f50a;");
+                  $(this)[0].attributes.value.value=1;
+                  $( ".sound").tooltip( "option", "content", "It's On!" );
+                }
+              });
+osCrush.initialize();
+function dropAll_from(i,elts,count){
+  for(var y=0; y<elts.length; y++){
+    if(elts[y].attributes.value.value !=="-1"){
+      var nextPosition=(parseInt($(elts[y]).css("top"))+(50));
+      $(elts[y]).css("top",nextPosition);
+    }else {
+      return;
+    }
+  }
+}
+function addOne_top(where){
+    var rand=Math.floor((Math.random() * 6) + 0);
+  $("#"+boardColumns[where]).prepend("<div class='cells' style='position: absolute; top:"+0+"px; left:"+where*50+"px;' value="+rand+"> <img class='cellsImg'   draggable='false' ondrop='drop(event)' ondragover='allowDrop(event)' src="+iconArray[rand]+" alt='' value="+rand+"> </div>");
+}
+function dropAnime1(){
+  for(var i=0; i<osCrush.getGrid().length; i++){
+    var elts=$("#"+boardColumns[i])[0].childNodes;
+    var count =0;
+    for(var j =0; j<elts.length; j++){
+        if(elts[j].attributes.value.value ==="-1" ){
+          dropAll_from(i,elts,count);
+          var t=parseInt($(elts[j])[0].style.top);
+          var l=parseInt($(elts[j])[0].style.left);
+          createBubbles(t,l,30);
+          $(elts[j]).remove();
+          addOne_top(i);
+          break;
+        }else {
+        }
+    }
+  }
+}
+var score=0;
+function updateScore(x){
+   score+=x;
+$(".scoreBoard span").html(score);
+}
+var totalPoint=0;
+function createBubbles(t,l,point){
+  var board_top=parseInt($(".scoreBoard").css("top"));
+  var board_left=parseInt($(".scoreBoard").css("left"));
+  var rand=Math.floor((Math.random() * 3) + 0);
+  var col=["white","lightblue","lightgreen"];
+  totalPoint+=point;
+  $(".gameBoard").append("<p style='z-index:10; color:"+col[rand]+"; font-size:1.5em; position:absolute; top:"+t+"px; left:"+l+"px;'>+"+point+"</p>");
+  //console.log($(".gameBoard")[0].lastChild);
+  $($(".gameBoard")[0].lastChild).animate({
+        left: '127px',
+        top: '-90px'
+    },500,function(){
+      $(this).remove();
+      //if(totalPoint!==0){
+        $(".gameBoard").append("<p style='z-index:10; color:lightblue; font-size:1.5em;position:absolute; top:"+(-85)+"px; left:"+70+"px;'><img src='light.png' style='width:40px; height:40px;'></img></p>");
+         updateScore(totalPoint);
+         totalPoint=0;
+    //  }
+        $($(".gameBoard")[0].lastChild).animate({
+              left: board_left+200,
+              top: board_top
+          },500,function(){
+            $(this).remove();
+              $(".scoreBoard").animate({
+                color: 'red'
+              },10,function(){
+                $(this).animate({
+                  color: 'black'
+               },10);
+              });
+          });
+    });
+}
+function updateGrid(){
+  for(var i =0; i<osCrush.getGrid().length; i++){
+    var elts1=$("#"+boardColumns[i])[0].childNodes;
+    for(var j =0; j<elts1.length; j++){
+      //console.log(elts1[j].attributes.value);
+      //osCrush.grid[i][j]=elts1[j].attributes.value.value;
+      osCrush.updateGrid(i,j,elts1[j].attributes.value.value);
+    }
+  }
+}
+function similation_failed(){
+  if(first_target && second_target){//osCrush.obtainedTarget("return")===2
+  //console.log(first_target.target);
+  if(!($(first_target.target).parents()[1])){
+    console.log("error on first target avoided");
+    return;
+  }
+    osCrush.setFirstTarget(first_target);
+    osCrush.setSecondTarget(second_target);
+    osCrush.flipTargets();
+  }else {
+    console.log("no target yet");
+  }
+  first_target=false;
+  second_target=false;
+}
+var interval =setInterval(function(){
+ dropAnime1();
+ updateGrid();
+ osCrush.checkGrid();
+},250);
+function run(){
+  dropAnime1();
+  updateGrid();
+  osCrush.checkGrid();
+  //console.log("ffff");
+}
+osCrush.addListener("crushAll_effect",function(topA,leftA){
+  //animée
+    var elt=$("<div class='bullet'  style='position: absolute; top:175px; left:175px; z-index:11; '><img src='light.png' alt='' style=' width:20px; height:20px; '></div>");
+    $(".lightningBox").append(elt);
+    elt.animate({
+      left: leftA,
+      top: topA
+    },700, function(){
+      $(this).remove();
+    });
+});
+osCrush.addListener("change_positions", function(targetA,targetB){
+  var tp =($(targetB.target).css("top"));
+  var lt =($(targetB.target).css("left"));
+  $(targetA.id).css("top",tp);
+  $(targetA.id).css("left",lt);
+  $(targetB.target).css("top",targetA.top);
+ $(targetB.target).css("left",targetA.left);
+});
+var arr=[0,0,0,0,0,0];
+osCrush.addListener("goal1",function(i,j,type){
+  arr[type]++;
+  var iconArray=["android.png","apple.png","freebsd.png","linux.png","ubuntu.png","windows.png"];
+  var elt=$("<div class='goalOs'  style='position: absolute; top:"+(j*50)+"px; left:"+(i*50)+"px; z-index:11; '><img src='"+iconArray[type]+"' alt='' style=' width:20px; height:20px; '></div>");
+   $("#span"+type).remove();
+  var sp =$("<span id='span"+type+"' style='position:absolute; top:25px;left:7px; color:red; display:none; '>"+arr[type]+"</span>");
+     elt.append(sp);
+  $(".gameBoard").append(elt);
+  var lt =(-220)+(25*type); //because of type;
+  elt.animate({
+    left: lt, //'-230px'
+    top: '30px'
+  },500, function(){
+    //$(this).remove();
+    sp.css({"display":"block"});
+    sp.animate({
+      fontSize:'+=10px'
+    },300, function(){
+      sp.animate({
+        fontSize:'-=10px'
+      },500);
+    });
+  });
+});
+osCrush.addListener("tesla_crush",function(x,y){
+ var s=y;
+ var s1=y;
+ console.log(s1);
+  var elt=$("<div class='tesla'  style='width:20px; height:20px; position: absolute; top:"+((x-20))+"px; left:"+((y-20))+"px; z-index:11; '><img src='e.png' alt='' style=' width:100px; height:100px; '></div>");
+  var elt2=$("<div class='tesla'  style='width:20px; height:20px; position: absolute; top:"+((x-20))+"px; left:"+((y-20))+"px; z-index:11; '><img src='e.png' alt='' style=' width:100px; height:100px; '></div>");
+  $(".gameBoard").append(elt);
+  $(".gameBoard").append(elt2);
+  elt.animate({
+    left:'350px',
+  },
+  {
+    duration:500,
+    step: function(){
+      s+=50;
+      //console.log(x/50,s/50);
+      if(s/50 >=0 && s/50<=6){
+        osCrush.updateGrid(s/50,x/50,-1);
+        osCrush.notifyGrid();
+      }
+    },
+    done: function(){
+      $(this).animate({
+        left:y-20
+      },function(){
+        $(this).remove();
+        osCrush.updateGrid(y/50,x/50,-1);
+       osCrush.notifyGrid();
+      });
+    }
+  });
+  elt2.animate( {
+         left: '-100px'
+    },
+    {
+      duration:500,
+      easing: "swing",
+      step: function(){
+        s1-=50;
+        if(s1/50 >=0 && s1/50<=6){
+          osCrush.updateGrid(s1/50,x/50,-1);
+          osCrush.notifyGrid();
+        }
+        //console.log(this.offsetLeft);
+      },
+      done:function(){
+        $(this).animate({
+          left:y-20,
+        },function(){
+          $(this).remove();
+        });
+      }
+    });
+});
+    </script>
+
+  </body>
+</html>
