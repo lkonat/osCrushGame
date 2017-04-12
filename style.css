@@ -5,10 +5,10 @@
 
 .icons {
   position: relative;
-  bottom: 10px;
+  bottom: 500px;
   width: auto;
   height: auto;
-  border; 1px solid red;
+  border: 1px solid red;
 }
 
 .android {
