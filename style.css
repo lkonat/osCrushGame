@@ -3,14 +3,6 @@
   height: 800px;
 }
 
-.icons {
-  position: relative;
-  bottom: 10px;
-  width: auto;
-  height: auto;
-  border; 1px solid red;
-}
-
 .android {
   position: fixed;
   bottom: 410px;
@@ -44,8 +36,8 @@
   position: fixed;
   bottom: 210px;
   left: 170px;
-  /-ms-transform: rotate(-25deg);
-  -webkit-transform: rotate(-25deg);
+  -ms-transform: rotate(-25deg); /* IE 9 */
+  -webkit-transform: rotate(-25deg); /* Chrome, Safari, Opera */
   transform: rotate(-25deg);
   -webkit-animation:spin 4s linear infinite;
   -moz-animation:spin 4s linear infinite;
@@ -66,7 +58,7 @@
 
 .windows {
   position: fixed;
-  bottom: 400px;
+  bottom: 430px;
   left: 17px;
   -ms-transform: rotate(-25deg); /* IE 9 */
   -webkit-transform: rotate(-25deg); /* Chrome, Safari, Opera */
@@ -107,7 +99,7 @@
   position: fixed;
   text-shadow: 2px 4px gray;
   top: 0%;
-  left: 23%;
+  left: 17%;
   width: auto;
   height: auto;
   color: #4df6ff;
