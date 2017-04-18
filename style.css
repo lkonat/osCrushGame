@@ -36,8 +36,8 @@
   position: fixed;
   bottom: 210px;
   left: 170px;
-  -ms-transform: rotate(-25deg); /* IE 9 */
-  -webkit-transform: rotate(-25deg); /* Chrome, Safari, Opera */
+  /-ms-transform: rotate(-25deg);
+  -webkit-transform: rotate(-25deg);
   transform: rotate(-25deg);
   -webkit-animation:spin 4s linear infinite;
   -moz-animation:spin 4s linear infinite;
@@ -81,7 +81,7 @@
 }
 
 .background {
-  background-image: url("page1.png");
+  background-image: url("images/page1.png");
   width: 1370px;
   height: 800px;
   margin: auto;
@@ -99,7 +99,7 @@
   position: fixed;
   text-shadow: 2px 4px gray;
   top: 0%;
-  left: 17%;
+  left: 23%;
   width: auto;
   height: auto;
   color: #4df6ff;
@@ -137,13 +137,14 @@
   -o-transition: all 1s ease;
   -ms-transition: all 1s ease;
   transition: all 1s ease;
+  cursor: pointer;
 
 }
 
 .btn button:hover {
   background-color: darkgray;
   color: #0ff;
-  -webkit-filter: blur(5px);
+
 }
 
 .home {
@@ -154,17 +155,7 @@
   border: 1px solid black;
   background-color: black;
 }
-.home_img img {
-  width: 50px;
-  height: 60px;
-  float: left;
-  cursor: pointer;
-  opacity: 0.5;
-  margin: 0.1em;
-}
-.home_img img:hover {
-  opacity: 1;
-}
+
 .title h2 {
   text-align: center;
   top: -45px;
@@ -185,168 +176,16 @@
   height: 35px;
   border-bottom: 2px solid white;
 }
-.score {
-  /*border: 1px solid white;*/
-  float: right;
-  /*background-color: grey;*/
-  top: -160px;
-  left: -5px;
-  font-family: 'Helvetica Neue', sans-serif;
-  position: relative;
-}
-.score  tr, td {
-  border: 1px solid black;
-  border-radius: 0.5em;
-  font-size: 1.3em;
-  font-family: 'Helvetica Neue', sans-serif;
-  background-color: grey;
-  color: white;
 
-}
-
-
-/*body{
+body{
   background-color:black;
 }
-  .mainConatiner{
-
-  }
-  .board{
-    position: relative;
-    width: 1000px;
-    height: 800px;
-    border: 1px solid black;
-    margin: 0 auto;
-    background-image: url("back3.jpg");
-  }
-  .gameBoard{
-      position: relative;
-      width: 500px;
-      height: auto;
-
-      background-color: rgba(0,0, 0, 0.5);
-      margin: 0 auto;
-  }
-  .header{
-    width: auto;
-    height: 70px;
-  }
-  .cells{
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    vertical-align: middle;
-    background-color: rgba(0,0, 0, 0.5);
-    border: 1px solid rgba(50,50, 50, 0.5);
-  }
-  .cellsImg{
-    width: 30px;
-    height: 30px;
-    text-align: center;
-    vertical-align: middle;
-
-  }
-  .header{
-    width: auto;
-    height: 70px;
-    background-color: rgba(50,50, 50, 0.5);
-  }
-  .sound{
-    font-size: 2em;
-    float: right;
-  }*/
-
-
-  body{
-    background-color:black;
-  }
-    .mainConatiner{
-      top: -700px;
-      position: relative;
-      width: auto;
-      height: 500px;
-    }
-    .board{
-      position: relative;
-      width: 1000px;
-      height: 800px;
-      border: 1px solid black;
-      margin: 0 auto;
-      background-image: url("computer3.jpeg");
-      background-size: 1000px 800px;
-      background-repeat: no-repeat;
-      /*border: 1px solid white;*/
-
-
-    }
-    .gameBoard{
-
-        position: relative;
-        width: 500px;
-        height: auto;
-        background-color: rgba(0,0, 0, 0.5);
-        margin: 0 auto;
-        left: 90px;
-        bottom: 90px;
-
-    }
-    .header{
-      width: auto;
-      height: 70px;
-      margin-bottom:90px;
-    }
-    .cells{
-      width: 50px;
-      height: 50px;
-      text-align: center;
-      vertical-align: middle;
-      background-color: rgba(0,0, 0, 0.5);
-      border: 1px solid rgba(50,50, 50, 0.5);
-      transition:.1s;
-      z-index: 3;
-    }
-    .cellsTodelete{
-      width: 50px;
-      height: 50px;
-      text-align: center;
-      vertical-align: middle;
-      background-color: rgba(0,0, 0, 0.5);
-      border: 1px solid rgba(50,50, 50, 0.5);
-      z-index: 1;
-
-    }
-    .cellsImg{
-      width: 40px;
-      height: 40px;
-      text-align: center;
-      vertical-align: middle;
-      cursor: pointer;
-
-    }
-    .header{
-      width: auto;
-      height: 70px;
-      background-color: rgba(50,50, 50, 0.5);
-    }
-    .sound{
-      font-size: 2em;
-      float: right;
-    }
-
-    .colum{
-      width: 50px;
-      length:auto;
-    }
-    #test{
-      position: absolute;
-      top: 0px;
-      left: 300px;
-      width: 100px;
-      height:300px;
-      background-color: white;
-      display: none;
-    }
-div#circle{
-  fill: white;
-
+.header{
+  width: auto;
+  height: 70px;
+  background-color: rgba(50,50, 50, 0.5);
+}
+.sound{
+  font-size: 2em;
+  float: right;
 }
