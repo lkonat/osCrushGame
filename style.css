@@ -5,88 +5,46 @@
 
 .android {
   position: fixed;
-  bottom: 410px;
-  right: 25px;
-  -ms-transform: rotate(20deg); /* IE 9 */
-  -webkit-transform: rotate(20deg); /* Chrome, Safari, Opera */
-  transform: rotate(20deg);
-  -webkit-animation:spin 4s linear infinite;
-  -moz-animation:spin 4s linear infinite;
-  animation:spin 4s linear infinite;
-
+  display: none; 
+  transform: rotate(-20deg);
 }
 
 .apple {
   position: fixed;
-  bottom: 30px;
-  left: 25px;
-  -ms-transform: rotate(20deg); /* IE 9 */
-  -webkit-transform: rotate(20deg); /* Chrome, Safari, Opera */
+  display: none;
   transform: rotate(20deg);
-  -webkit-animation:spin 4s linear infinite;
-  -moz-animation:spin 4s linear infinite;
-  animation:spin 4s linear infinite;
-}
 
-@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
-@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
-@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(850deg); } }
+}
 
 .linux {
   position: fixed;
-  bottom: 210px;
-  left: 170px;
-  /-ms-transform: rotate(-25deg);
-  -webkit-transform: rotate(-25deg);
-  transform: rotate(-25deg);
-  -webkit-animation:spin 4s linear infinite;
-  -moz-animation:spin 4s linear infinite;
-  animation:spin 4s linear infinite;
+  display: none;
+  transform: rotate(20deg);
 }
 
 .freebsd {
   position: fixed;
-  bottom: 20px;
-  right: 60px;
-  -ms-transform: rotate(-25deg); /* IE 9 */
-  -webkit-transform: rotate(-25deg); /* Chrome, Safari, Opera */
-  transform: rotate(-25deg);
-  -webkit-animation:spin 4s linear infinite;
-  -moz-animation:spin 4s linear infinite;
-  animation:spin 4s linear infinite;
+  display: none;
+  transform: rotate(-20deg);
 }
 
 .windows {
   position: fixed;
-  bottom: 430px;
-  left: 17px;
-  -ms-transform: rotate(-25deg); /* IE 9 */
-  -webkit-transform: rotate(-25deg); /* Chrome, Safari, Opera */
-  transform: rotate(-25deg);
-  -webkit-animation:spin 4s linear infinite;
-  -moz-animation:spin 4s linear infinite;
-  animation:spin 4s linear infinite;
+  display: none;
+
 }
 
 .ubuntu {
   position: fixed;
-  bottom: 210px;
-  right: 250px;
-  -ms-transform: rotate(7deg); /* IE 9 */
-  -webkit-transform: rotate(7deg); /* Chrome, Safari, Opera */
-  transform: rotate(7deg);
-  -webkit-animation:spin 4s linear infinite;
-  -moz-animation:spin 4s linear infinite;
-  animation:spin 4s linear infinite;
+  display: none;
 }
 
 .background {
   background-image: url("page1.png");
-  width: 1370px;
-  height: 800px;
+  width: 20000px;
+  height: 20000px;
   margin: auto;
   /*opacity: 0.6;*/
-  position: relative;
   filter: blur(2px);
   position: fixed;
   margin-top: -300px;
@@ -96,12 +54,7 @@
   position: fixed;
   text-align: center;
   font-size: 2em;
-  position: fixed;
   text-shadow: 2px 4px gray;
-  top: 0%;
-  left: 23%;
-  width: auto;
-  height: auto;
   color: #4df6ff;
   font-family: 'Helvetica Neue', sans-serif;
   font-size: 60px;
@@ -111,39 +64,26 @@
   /*border: 1px solid white;*/
 }
 
-.btn {
-  /*margin: 10em 5em 0 25em;*/
-  position: fixed;
-  top: 55%;
-  left: 32%;
-  width: auto;
-  height: auto;
-}
 .btn button {
-  background:    #999;
-  background:    -webkit-linear-gradient(#000, #999 50%, #000);
-  background:    linear-gradient(#000, #999 50%, #000);
-  border:        3px solid #0ff;
+  position: fixed;
+  margin-left: 410px;
+  margin-top: 200px;
+  background: #999;
+  border: 3px solid #0ff;
   border-radius: 999px;
-  box-shadow:    1px 0 0 0 #444;
-  color:         white;
-  display:       inline-block;
-  padding:       8px 26px;
-  font:          normal 700 50px/1 'Helvetica Neue', sans-serif;
-  text-align:    center;
-  text-shadow:   2px 2px 0 #000;
-  -webkit-transition: all 1s ease;
-  -moz-transition: all 1s ease;
-  -o-transition: all 1s ease;
-  -ms-transition: all 1s ease;
-  transition: all 1s ease;
+  box-shadow: 1px 0 0 0 #444;
+  color: white;
+  padding: 8px 26px;
+  font: normal 700 50px 'Helvetica Neue', sans-serif;
+  text-align: center;
+  text-shadow: 2px 2px 0 #000;
+
 
 }
 
 .btn button:hover {
   background-color: darkgray;
   color: #0ff;
-  -webkit-filter: blur(5px);
 }
 
 .home {
