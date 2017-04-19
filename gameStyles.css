@@ -1,0 +1,153 @@
+.board{
+    position: relative;
+    width: 500px;
+    height:  auto;
+    color: black;
+    margin: 0 auto;
+
+
+}
+  .GameBoard{
+    position: absolute;
+    top: 187px;
+    left: 0px;
+    width: 490px;
+    height: 470px;
+    color: black;
+    border: 3px solid lightblue;
+    border-right: inherit;
+    -ms-transform: rotate(-90deg); /* 470px IE 9 */
+    -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+    transform: rotate(-90deg);
+    z-index: 2;
+  }
+
+  .boxes{
+    background-size: contain;
+    background-repeat: no-repeat;
+    -ms-transform: rotate(90deg); /* IE 9 */
+    -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+    transform: rotate(90deg);
+    z-index: 2;
+  }
+  .bubbles{
+    -ms-transform: rotate(90deg); /* IE 9 */
+    -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+    transform: rotate(90deg);
+
+
+  }
+  .scoreBoard{
+    width: 200px;
+    height: auto;
+    font-size: 2em;
+    position: absolute;
+    top:-255px;
+    left:530px;
+    color:black;
+    text-align: center;
+    color: white;
+    background: linear-gradient(#000, #999 50%, #000);
+    border: 3px solid #0ff;
+    border-radius: 30px;
+    -ms-transform: rotate(90deg); /* IE 9 */
+    -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+    transform: rotate(90deg);
+    z-index: 3;
+
+  }
+  .goalBoard{
+    width: 200px;
+    height: 100px;
+    font-size: 1em;
+    position: absolute;
+    top:-270px;
+    left:430px;
+    color:black;
+    text-align: center;
+    color: white;
+    background-color:grey;
+    -ms-transform: rotate(90deg); /* IE 9 */
+    -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+    transform: rotate(90deg);
+    background: linear-gradient(#000, #999 50%, #000);
+    border: 3px solid #0ff;
+    border-radius: 30px;
+  }
+  .circuit{
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top:200px;
+    left:570px;
+    background-image: url("images/circuit.png");
+    background-color: inherit;
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    -ms-transform: rotate(90deg); /* IE 9 */
+    -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+    transform: rotate(90deg);
+  }
+  .capturedOs{
+    -ms-transform: rotate(90deg); /* IE 9 */
+    -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+    transform: rotate(90deg);
+  }
+  #pausePlay{
+    background: linear-gradient(#000, #999 50%, #000);
+    border: 3px solid #0ff;
+    border-radius: 999px;
+    position: absolute;
+
+    top: 220px;
+    left:-255px;
+    font-size: 2em;
+    cursor: pointer;
+    color: white;
+    z-index: 3;
+  }
+
+  #replay{
+    background:linear-gradient(#000, #999 50%, #000);
+    border: 3px solid #0ff;
+    border-radius: 999px;
+    position: absolute;
+    top: 275px;
+    left:-260px;
+    font-size: 2em;
+    cursor: pointer;
+    color: white;
+    z-index: 3;
+  }
+
+  #replay, #pausePlay:focus {
+  outline: none;
+}
+  .sound{
+    position: absolute;
+    width: 45px;
+    height: :45px;
+    top: 0px;
+    left:700px;
+    cursor: pointer;
+  }
+  #destroyer{
+    width: 95px; height: 95px;
+    position: absolute;
+    top: -100px;
+    left:0px;
+    color: white;
+    font-size: 20px;
+    z-index: 4;
+    display: none;
+  }
+  .destroyer2{
+    width: 130px; height: 130px;
+    position: absolute;
+    top:0px;
+    left:200px;
+    color: white;
+    cursor: pointer;
+    z-index: 4;
+  }
