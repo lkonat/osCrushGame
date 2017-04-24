@@ -74,8 +74,134 @@
       </div>
     </div>
   </div>
+    <div class="boite">
+<div class="box-left">
+</div>
+<div class="box">
+  <div class="felicitation">
+    <h1>CONGRATULATION!!!</h1>
+    <p>Click on the mystery box to see yoour prize!!</p>
+  </div>
+  <div class="prize">
+    <p id="p1">Congratulation genius!!</p>
+    <p id="p2">You were able to unify all of these greatest personalyties.</p>
+    <p id="p3">To work on this amazing project.....</p>
+    <p id="p4">The ressult is amazing.. We have made an OS that was never seen before...</p>
+    <p id="p5">You should name the new operating system...</p>
+  </div>
+  <div class="usr">
+    <input type="text" id="osname" placeholder="Please enter the name here...">
+  </div>
+  <div class="prize2">
+    <table>
+      <tr>
+    <th><img src="windows.png"></th>
+    <th><img src="apple.png"></th>
+    <th><img src="android.png"></th>
+    <th><img src="freebsd.png"></th>
+    <th><img src="linux.png"></th>
+    <th><img src="ubuntu.png"></th>
+  </tr>
+  </table>
+  <div class="newos">
+  </div>
+  </div>
+  <div class="mystery-box">
+    <img src="mystery-box.png" onclick="show()" style="width:300px; height:300px">
+  </div>
+<div class="os1">
+  <img src="android.png">
+</div>
+<div class="os2">
+  <img src="apple.png">
+</div>
+<div class="os3">
+  <img src="freebsd.png">
+</div>
+  <div class="os4">
+   <img src="linux.png">
+</div>
+<div class="os5">
+  <img src="ubuntu.png">
+</div>
+<div class="os6">
+  <img src="windows.png">
+</div>
+</div>
+<div class="box-right">
+</div>
+</div>
 </div>
 <script>
+    $("#p1").hide();
+  $("#p2").hide();
+  $("#p3").hide();
+  $("#p4").hide();
+  $("#p5").hide();
+  $(".prize2").hide();
+
+  $(".felicitation").hide();
+  $(".prize, .usr").hide();
+    $(".os1").animate({
+      right:"-=450",
+      top:"+=600"
+    },1000);
+    $(".os1").hide(500);
+
+    $(".os2").animate({
+      left:"-=450",
+      top:"+=600"
+    },1000);
+    $(".os2").hide(500);
+
+    $(".os3").animate({
+      left:"-=410"
+    },1000);
+    $(".os3").hide(500);
+
+
+    $(".os4").animate({
+      right:"-=410"
+    },1000);
+    $(".os4").hide(500);
+
+    $(".os5").animate({
+      left:"-=410",
+      top:"-=410"
+    },1000);
+    $(".os5").hide(200);
+
+    $(".os6").animate({
+      right:"-=410",
+      top:"-=410"
+    },1000);
+    $(".os6").hide(200);
+    $(".felicitation").fadeIn(3500);
+
+    function color() {
+      var r= Math.floor(Math.random() * 250);
+      var g= Math.floor(Math.random() * 250);
+      var b= Math.floor(Math.random() * 250);
+        $(".box-left, .box-right, .newos").css("background-color", "rgb("+ r +"," + g + "," + b + ")");
+        setTimeout(color, 100);
+    }
+    color();
+
+    function show(folder) {
+    $(".mystery-box").hide();
+    $(".felicitation").hide();
+    $(".prize").fadeIn();
+    $("#p1").fadeIn(1000);
+    $("#p2").fadeIn(3000);
+    $("#p3").fadeIn(5000);
+    $("#p4").fadeIn(7000);
+    $("#p5").fadeIn(10000);
+    $(".usr").fadeIn(10000);
+    $(".prize2").fadeIn(10000);
+  }
+  
+  
+  
 $( document ).tooltip();
 $( ".sound" ).tooltip({
   classes: {
