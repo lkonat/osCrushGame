@@ -1,0 +1,820 @@
+<!doctype>
+<html>
+<head>
+  <script src="jquery-3.1.1.min.js"></script>
+    <link	rel = "stylesheet"	type = "text/css"	href = "style.css">
+    <link	rel = "stylesheet"	type = "text/css"	href = "gameStyles.css">
+    <link rel="stylesheet" href="jquery-ui.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Londrina Shadow' rel='stylesheet'>
+    <script type="text/javascript" src="model.js"> </script>
+    <script src="jquery-ui.min.js"></script>
+</head>
+<body>
+  <div class="box">
+  <div class="ctn">
+  <svg><filter id=cracked><feGaussianBlur stdDeviation=.5 in=SourceGraphic result=B /><feTurbulence result=T numOctaves=7 seed=488 baseFrequency=.042 /><feDisplacementMap in2=T xChannelSelector=R yChannelSelector=G in=T result=D /><feComposite in2=D operator=in in=B result=C /><feSpecularLighting in=C specularExponent=65 specularConstant=2 result=S surfaceScale=2><feDistantLight azimuth=225 elevation=62 /></feSpecularLighting><feComposite in2=C operator=arithmetic k1=2.5 k2=-.5 k3=1 in=S result=C /><feBlend in2=C mode=multiply result=A /><feColorMatrix result=fC in=A values='1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -2 -0.5 0 5 -2'/><feGaussianBlur result=B in=fC stdDeviation=8 /><feOffset in=B dy=2 dx=2 /><feSpecularLighting specularExponent=15 specularConstant=.8 surfaceScale=4 result=S in=B><fePointLight z=20000 y=-10000 x=-5000 /></feSpecularLighting><feComposite in2=fC operator=in in=S result=C /><feComposite in2=C operator=arithmetic k2=2 k3=2 in=A result=C /><feBlend in2=C mode=darken /></filter>
+  </svg>
+  <div class="background"></div>
+   <div class="sound" value="1" title="It's On!">&#x1f50a;</div>
+   <div class="welcome">
+    <h1 style="margin-left:300px;margin-top:-90px;">OS CRUSH</h1>
+  </div>
+
+  <div class="android">
+    <img src="images/android.png" style="width:190px;height:190px;margin-left:50px;margin-top:-120px;">
+  </div>
+
+  <div class="linux">
+    <img src="images/linux.png" style="width:190px;height:190px;margin-left:150px;margin-top:50px;">
+  </div>
+
+  <div class="ubuntu">
+    <img src="images/ubuntu.png" style="width:180px;height:180px;margin-left:1050px;margin-top:280px;">
+  </div>
+
+  <div class="apple">
+    <img src="images/apple.png" style="width:180px;height:180px;margin-left:975px;margin-top:-310px;">
+  </div>
+
+  <div class="windows">
+    <img src="images/windows.png" style="width:180px;height:180px;margin-left:890px;margin-top:90px;">
+  </div>
+
+  <div class="freebsd">
+    <img src="images/freebsd.png" style="width:180px;height:180px;margin-left:-20px;margin-top:300px;">
+  </div>
+
+  <div class="btn">
+    <button onclick="showpage(2)">START GAME</button>
+  </div>
+  </div>
+  <div class="mainConatiner">
+    <div class="board">
+      <img id="destroyer" src ="images/tornado.gif">
+        <div class="sound" value="1" title="It's On!">&#x1f50a;</div>
+        <div class="timer" value="1" title="timer"><span id ='minute'>00</span>:<span id='seconds'>00</span></div>
+        <button id="pausePlay" >Pause</button>
+        <button id="replay" >Replay</button>
+
+      <div class="GameBoard">
+        <div class="bouclier"></div>
+        <div class="circuit"></div>
+        <div class="scoreBoard" id="scoreBoard">Score <br><span >0000</span></div>
+        <div class="goalBoard" id="goalBoard">Goal: Get each OS</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+var allow =true; // this will allow the sounds
+$( document ).tooltip();
+$( ".sound" ).tooltip({ //jquery ui element for displaying a tooltip when hovering hover the sound icon
+  classes: {
+    "ui-tooltip": "highlight"
+  }
+});
+$("h1").slideUp(100);
+$("h1").slideDown(1000);
+$(".apple").fadeIn(1500);
+$(".linux").fadeIn(2000);
+$(".ubuntu").fadeIn(3000);
+$(".android").fadeIn(4000);
+$(".windows").fadeIn(5000);
+$(".freebsd").fadeIn(6000);
+$(".btn").fadeOut(1000);
+$(".btn").fadeIn(1000);
+var scrollSpeed = 3;
+var current = 0;
+var directon = "h";
+
+$(".ctn").show();
+$(".mainConatiner").hide();
+$(".home").hide();
+
+function showpage(page) {
+  $(".ctn").hide();  //hide the button
+  $(".mainConatiner").hide(); //hide the game itself
+  $(".home").hide(); // hide the header of the game itself
+  if (page === 1) {
+    $(".ctn").fadeIn(900);
+    animHome = setInterval("croll()", scrollSpeed);
+  }
+  else if (page === 2) {
+   //$(".home").fadeIn(900);
+  clearInterval(animHome);
+  stopAllSounds();
+    $(".mainConatiner").fadeIn(1000);
+    startGame(true);
+
+  }
+}
+//showpage(2); //////..........................
+var welcome = new Audio("sounds/victory.mp3"); //the music to be played when the page first load
+var endmusic = new Audio("sounds/endmusic.mp3"); // the music of the end of the game
+var startSound = new Audio("sounds/start.mp3"); // the music when the user press on the start game button
+welcome.play(); // start playing the welcome music rigth now
+function croll() { // this function makes the background of the landing page seems like moving
+  current -= 1;
+  $(".background").css("background-position", (directon == "h")? current + "px 0" : "0 " + current + "px");
+  if(welcome.paused && allow){ // if the welcome music is done, played a gain until user start a game to play.
+     welcome.play();
+  }
+}
+
+var animHome=setInterval("croll()", scrollSpeed); // start mocing the landing page background.
+//the code for the actual game play starts here......................................................
+
+var myTime =0; // the time, it is the sconds
+var mySize=70; // the size of each boxes witch contains the OS
+var icons=["images/android.png","images/apple.png","images/freebsd.png","images/linux.png","images/ubuntu.png","images/windows.png"]; // all the os icons
+var pioneers=["images/gates.png","images/stevejobs.png","images/dennisritchie.png","images/linustrovals.png","images/markshuttleworth.png"],pionerWorks=[ "5","1","2","3","4"];
+var gameStarted=false; // variable to see if the game started or not
+var myBonnus =false; // variable to see if there is a bonnus, in our game the bonus is when user match more than 3 elements in a row
+var score =0;  //variable to store the score
+//this is an array to store all the sounds.
+var arrSounds =[new Audio("sounds/press.mp3"),new Audio("sounds/release.mp3"),new Audio("sounds/bomb1.mp3"),new Audio("sounds/negative.mp3"),new Audio("sounds/switch.mp3"),new Audio("sounds/lazer1.mp3"),new Audio("sounds/score.mp3"),new Audio("sounds/flashloop.mp3"), new Audio("sounds/land1.mp3"),new Audio("sounds/troy.mp3"),new Audio("sounds/click.mp3"),new Audio("sounds/catch.mp3"),new Audio("sounds/supertroy.mp3")];
+
+function playSounds(what){ // this function plays a song that we passedd as a parameter.
+  if(allow){ //if the sound button is activated then it is allow to play the sound
+    if(what === "press"){ //if the parameter is "press", play the pressing sound
+      arrSounds[0].play();
+    }else if(what === "up"){
+      arrSounds[1].play();
+    }
+    else if(what === "bomb1"){
+      if(!arrSounds[2].paused){ // if the sound is already playing, pause it and play the new one so the sound effect will be consistent and more real
+          arrSounds[2].pause();
+          arrSounds[2].load();
+      }
+      setTimeout(function(){arrSounds[2].play();},0); // this is just to give time to the computer so there will be no error
+    }else if(what === "negative"){
+      arrSounds[3].play();
+    }
+    else if(what === "switch"){
+      if(!arrSounds[4].paused){
+          arrSounds[4].pause();
+          arrSounds[4].load();
+      }
+      setTimeout(function(){arrSounds[4].play();},0);
+    }
+    else if(what === "lazer"){
+      arrSounds[5].play();
+    }
+    else if(what === "score"){
+      if(!arrSounds[6].paused){
+          arrSounds[6].pause();
+          arrSounds[6].load();
+      }
+      setTimeout(function(){arrSounds[6].play();},0);
+    }
+    else if(what === "flash"){  // i am disactivated this because it was little annoying to me?
+      //clikSound.play();
+    //  arrSounds[7].play();
+    }
+    else if(what === "land1"){
+      arrSounds[8].play();
+    }
+    else if(what === "troy"){
+      arrSounds[9].play();
+    }
+    else if(what === "click"){
+      arrSounds[10].play();
+    }
+    else if(what === "catch"){
+      arrSounds[11].play();
+    }
+    else if(what === "supertroy"){
+      arrSounds[12].play();
+    }
+  }else {
+    console.log("not alllowed"); // the sound is disactivated, so not alllowed to play
+  }
+}
+
+function stopAllSounds(){   // this function stop all the sounds, it is activated when you press on the sound icon to disactivate it
+  for(var i =0; i<arrSounds.length; i++ ){
+    if(!arrSounds[i].paused){
+      arrSounds[i].pause();
+    }
+  }
+  welcome.pause();
+  endmusic.pause();
+  startSound.pause();
+}
+
+
+game.addListener("soundListenner",function(what){ //this is the sound listenner for the model because some logic from the model may want to play sound as well
+  if(allow){ // again, the sound play only if it is allow
+      if(what === "press"){
+        var clikSound  = new Audio("sounds/press.mp3");
+        clikSound.play();
+      }else if(what === "up"){
+        var clikSound  = new Audio("sounds/release.mp3");
+        clikSound.play();
+      }
+      else if(what === "bomb1"){
+        var clikSound  = new Audio("sounds/bomb1.mp3");
+        clikSound.play();
+      }else if(what === "negative"){
+        var clikSound  = new Audio("sounds/negative.mp3");
+        clikSound.play();
+      }
+      else if(what === "switch"){
+        var clikSound2  = new Audio("sounds/switch.mp3");
+        clikSound2.play();
+      }
+      else if(what === "denied"){
+        var clikSound2  = new Audio("sounds/denied.mp3");
+        clikSound2.play();
+      }
+}
+});
+
+
+
+game.addListener("drawNewBox",function(top,left, type){ // this listener add new boxes when they need to
+  var id=top+""+left+""+type, top = top*mySize, left = 7*mySize; //left allways at 6, last position
+  var div =$("<div class = 'boxes' id = '"+id+"'  style = 'position:absolute; width:45px; height:45px; top:"+top+"px; left:"+left+"px;  background-image:url("+icons[type]+"); '><div>");
+  $(".GameBoard").append(div);
+  playSounds("land1"); // play the sound of landing
+  div.mousedown(function(e){ // when user click on  the os
+    e.preventDefault(); // it prevents default
+    if(gameStarted){
+       game.tryMoveClick(e.target.id,e.target.className); // tels the model to try if this move was legal
+      if($(".aPionner").length >0){  // if there is the effect pione, remove it
+        $(".aPionner").remove();
+      }
+      if($(".destroyer2").length > 0){ // if there the effect destroyer2, remove it
+        $(".destroyer2").remove();
+      }
+        //$(this).animate({width:"+=10",height:"+=10"},300,function(){$(this).animate({width:"-=10",height:"-=10"},100)});
+   }
+  });
+  div.mouseup(function(e){ // the mouse if up
+    e.preventDefault();
+    if(gameStarted){
+       game.tryMoveDrag(e.target.id,e.target.className); // let the model know about the move drag
+    }
+  });
+});
+
+
+game.addListener("drawGrid",function(top,left, type){ // this listener add all the box at the game when it starts
+  var id=top+""+left+""+type, top = top*mySize, left = left*mySize;
+  var div =$("<div class = 'boxes' id = '"+id+"'  style = 'position:absolute; width:45px; height:45px; top:"+top+"px; left:"+left+"px;  background-image:url("+icons[type]+"); '><div>");
+  $(".GameBoard").append(div);
+  div.mousedown(function(e){
+    e.preventDefault();
+    if(gameStarted){
+      game.tryMoveClick(e.target.id,e.target.className);
+      if($(".aPionner").length >0){
+          $(".aPionner").remove();
+      }
+      if($(".destroyer2").length > 0){
+        $(".destroyer2").remove();
+      }
+        //$(this).animate({width:"+=10",height:"+=10"},300,function(){$(this).animate({width:"-=10",height:"-=10"},100)});
+    }
+  });
+  div.mouseup(function(e){
+
+    e.preventDefault();
+    if(gameStarted){  game.tryMoveDrag(e.target.id,e.target.className);}
+  });
+});
+
+
+game.addListener("deleted",function(ids,bonnus,effect1){ // this listenner to be called when the model wants to delete boxes after they are matched.
+  $(".bouclier").show(); // this show a invisible wall to keep user from clicking when the game is deleting, else it will lead to an error
+  myBonnus=bonnus; // put the bonnus in variable, so week can manage it later
+for(var i=0; i< ids.length; i++){
+    var top = parseInt($("#"+ids[i]).css("top")); // get the top value of the element to be deleted
+    var left = parseInt($("#"+ids[i]).css("left"));//get the left value of the element to be deleted
+    var type =ids[i].charAt(2); // pu the type of the os in a variable, we need it later.
+    if(effect1){ // if there is an effect
+      blastAll(top,left,$("#"+ids[i])); // delete them with the effect, i called blast
+    }
+    else { // if there is not effect
+      $("#"+ids[i]).css({"background-image":"url(images/gif.gif)"}); // change the background-image to this gif image
+      playSounds("bomb1"); // play the bomb sound.
+      //now animate it so it looks like an explosion
+      $("#"+ids[i]).animate({
+        width:"+=30px", // increase the width
+        height:"+=30px",
+        top:"-=10px"},
+        100,
+        function(){
+          $(this).animate({
+            width:"-=30px", //decrease the width
+            height:"-=30px",
+            top:"+=10px",
+            left:"+=5px"},
+            100,
+            function(){
+              $(this).css({"background-image":"url(images/e.png)"}); //lastly change the image to an image similar to the end of an explosion
+            }
+          );
+        }
+      );
+    }
+    // now, make some bubble effects, the bubble effect  is the points floating to go to the circuit tree
+    var bubbles = $("<p class ='bubbles' style ='position:absolute; width: 50px; height: 50px; top:"+top+"px; left:"+left+"px; color: white; font-size: 2em;'>+30</p>");
+    $(".GameBoard").append(bubbles);
+    bubbles.animate({top: "217px",left:"525px",fontSize:".5em"},700,function(){$(this).css({"font-size":".5em"}); $(this).remove(); treeAbsord(type,bonnus);});
+    debri(top,left); // also make a a debis effect of the explosion
+ }
+
+ setTimeout(function(){ //set a timeout to wait for all the delete animation and stuff
+    for(var i=0; i< ids.length; i++){ //go through all the deleted ones and remove them
+      $("#"+ids[i]).remove();
+    }
+    game.deleteDone(ids); // let the model know that you are done deleting what it wanted you to delete.
+
+ },700);
+ myBonnus=[]; //make the bonnus variable empty to make room for upcomings ones
+});
+
+game.addListener("bouclier",function(){ // this is shield listenner that the model will use to prevent user from clicking while it is busy
+  $(".bouclier").hide(); // the model will hid the shield
+});
+game.addListener("updateABox", function(id,del,top,left){ /// listenner to change positions of the boxes when there is change
+  var oldPosition = parseInt($("#"+id).css("left")); // take the old position, we need it later
+   $("#"+id).animate({ // animate its position to its new position
+      top: top*mySize,
+      left: left*mySize
+   },
+   300,
+   function(){ //when done moving it
+     var newPosition = parseInt($("#"+id).css("left")); // take the new position
+     if(oldPosition !== newPosition){ // if the new position is different from the old one, it moved , so apply a bouncing effect
+       if($("#"+id).length>0){ // if it exists
+         chakeIt($("#"+id),10); //bouncing effect
+       }
+     }
+   });
+
+});
+
+function chakeIt(id,length){ // function to similate the bouncing effect , recursive function that keep animating the elemnt position so it look like it is bouncing
+  if(length <=0){
+    return;
+  }
+  $(id).animate({
+    left:"+="+length+"px"
+  },55,function(){
+         $(id).animate({
+            left:"-="+length+"px"
+          },55,function(){
+            chakeIt(id,length-=5);
+          });
+      }
+ );
+}
+
+game.addListener("pioneer",function(who){ // the listener to a special effect witch blow all the same type of a particular OS
+ if(gameStarted){
+   if($("#aPionner").length >0){// if it is all ready there, get out of the function .
+      return;
+    }
+    //if it is not there, create it
+    var pioneerImage=$("<div class='aPionner'  id ='aPionner' style ='position:absolute; top:370px; left:600px; cursor:pointer;'><img  src='images/eco.png' style='width:90px; height: 90px; '><img src= "+icons[who]+" style=' width:20px; height: 20px; position:absolute; top:35px; left:35px; cursor:pointer;'></div>");
+    $(".board").append(pioneerImage); // add it to the board
+    pioneerImage.click(function(){  // when user click on it
+      if(gameStarted){
+        this.remove(); //remove it
+        if($(".destroyer2").length > 0){ // if the other special effect is there too, remove it also
+           $(".destroyer2").remove();
+        }
+        game.deleteAll(who.toString()); //now delete all the targeted OS.
+      }
+    });
+ }
+});
+
+game.addListener("troy",function(p){ // the listener to a special effect witch blow a row randomly with a tornado effect, i called it troy.
+  if(gameStarted){
+    if($(".destroyer2").length > 0){ //if troy is already there, no need to create a new one, get out of the function.
+      return;
+    }
+    //if troy is not there, create it
+    var img =$("<img class='destroyer2' src='images/e1.png'>");
+    $(".board").append(img); // append it to the board
+    playSounds("troy"); // play troy entering song!!!!!!
+    img.animate({top:200,left:570},300); // animate its position
+    img.click(function(){ // when user click on troy
+      if(gameStarted){ //if the game started
+        var rand=Math.floor((Math.random() * 6) + 0); // choose a random row
+        if($("#aPionner").length >0){ $("#aPionner").remove();} // if the pioner effect is there, remove it.
+        troy(rand); // troy destroy the random row .
+        img.remove();// remove troy
+      }
+    });
+  }
+});
+
+function debri(top,left){ // this function  is the debris effect function, it used when a boxes is deleted
+  top =top -25;
+  for(var i =0; i<10; i++){ // creating ten blue dots like dust and let them drop
+  var rand=Math.floor((Math.random() * 4) + 0);
+  top=top+2;
+  var bubbles = $("<p class ='' style ='position:absolute; width: 10px; height: 10px; top:"+top+"px; left:"+left+"px; color: blue;'>...</p>");
+  $(".GameBoard").append(bubbles); //add them to the GameBoard
+   bubbles.animate({ //animate them
+    left:"-500px"
+  },i*100+500,function(){
+     $(this).remove(); // remove them when done
+
+   });
+  }
+}
+
+
+function blastAll(top,left,callBAck,callBAck2){ // the blast function called when there is something to be destroy with animation by the pionner effect
+    //var start =$("<img ></img>");
+    //create red missiles
+  var elt=$("<div class='bullet'  style='position: absolute; top:190px; left:600px; z-index:11; '><img src='images/light.png' alt='' style=' width:70px; height:70px; '></div>");
+  $(".GameBoard").append(elt);
+  playSounds("lazer"); // play the missile sound
+  elt.animate({ //animate the missile position to its target
+      top:top,
+      left:left
+    },
+    500,
+    function(){
+      $(this).remove(); //remove it when done
+      callBAck.css({"background-image":"url(images/gif.gif)"}); /// change the elemnt image that just got hit by the missile
+      playSounds("bomb1"); // play the bomb sound
+      callBAck.animate({ //animate the elemnt  that just got hit by the missile
+        width:"+=30px",
+        height:"+=30px",
+        top:"-=10px"},
+        100,
+        function(){
+          $(this).animate({
+            width:"-=30px",
+            height:"-=30px",
+            top:"+=10px",
+            left:"+=5px"},
+            100,
+            function(){
+              $(this).css({"background-image":"url(images/e.png)"});
+            }
+          );
+        }
+      );
+    }
+  );
+}
+
+function treeAbsord(type, bonus){ // the function for the red circuit tree on top
+    if(gameStarted){ // ifthe is running
+      //create red ennergy
+      var elt0=$("<img src='images/light.png' alt='' style=' position: absolute; top:"+217+"px; left:"+555+"px;width:30px; height:30px; '>");
+      $(".GameBoard").append(elt0); //append it to the GameBoard
+      //playSounds("flash"); this sound was annoying, so i removed it for now?
+      elt0.animate({ //animate the red dots position
+        width:"+=20",
+        height:"+=20",
+        left:"+=55",
+        top: "-=7"},
+        1000,
+        function(){
+          if(bonus && gameStarted){ //if there is a bonnus, we captured an OS
+            for(var i=0; i< bonus.length; i++){
+              if(bonus[i].type === type){  // if the the captured OS if the one that we are having the bonus on
+                // create an image of the captured os
+                 var elt1=$("<div class='capturedOs' id ='capOs"+type+"' style='position: absolute; top:"+(217-7)+"px; left:"+(555+55)+"px; '><img  src='"+icons[type]+"' alt='' style='  width:30px; height:30px; '></div>");
+                 var span =$("<span style='position:absolute; top:25px; left:10px; color:white;'></span>");
+                 var topValueNow=(parseInt($(".goalBoard").css("top"))-45)+(type*30); // calculates the position of where the captured os should be, it is based on its type
+                 elt1.animate({ // animate the image of the captured os to the goal board
+                   left:parseInt($(".goalBoard").css("left"))+70,
+                   top: topValueNow},
+                   700,
+                   function(){
+                     span.animate({ // animate the span that display the amount of the type of this OS captured
+                       fontSize:"+=10"},
+                       300,
+                       function(){
+                         $(this).animate({
+                           fontSize:"-=10"},
+                           30
+                         );
+                       }
+                     );
+                });
+                if($("#capOs"+type).length>0){ // if this os was captured before, and it is already there,..
+                  var oldValue = parseInt($("#capOs"+type+" span").html());// get its all amount value, how many of its type
+                  $("#capOs"+type).remove(); // remove it
+                  span.append(oldValue+1); //update  the amound in the span
+                  elt1.append(span);
+                  $(".GameBoard").append(elt1);
+                  playSounds("catch"); // play the sound catch
+                  isGameOver(); //check if the game is over, the game is over when we cacth all the os
+                }else { //if this os was not captured before
+                  span.append(1); //update the amount to one
+                  elt1.append(span);
+                   $(".GameBoard").append(elt1);
+                   playSounds("catch"); // play the sound catch
+                   isGameOver();//check if the game is over, the game is over when we cacth all the os
+                }
+                bonus[i].type=false; // change bonus type so it wont repeat
+            }
+        }
+      }
+      $(this).animate({ // animate the red energy position to the  scoreBoard
+        left:parseInt($(".scoreBoard").css("left"))+90,
+        top: $(".scoreBoard").css("top")},
+        300,
+        function(){ //when done
+          $(this).remove(); // remove it
+          if(gameStarted){
+            score+=3*30; //increase the score;
+            $(".scoreBoard span").html(score); //update the score
+            playSounds("score"); //play the score received sound
+            $(".scoreBoard").animate({ // animate the score board position to react to the hit
+              top: "-=5"},
+              50,
+              function(){
+                  $(this).animate({
+                    top: "+=5"}
+                    ,10
+                  );
+                }
+             );
+          }
+        }
+      );
+    }
+   );
+  }
+}
+
+
+//$(".test").click(function(){$(".board").show();});
+var theTimer; //a variable created so we can access the game timer anywhere
+$("#pausePlay").click(function(e){ //when user click on pause
+    playSounds("click");
+    var t, l, wh,icon,opa, word;
+    if(gameStarted){
+      t = 370; l= 190; wh ="+=50"; icon="images/play.png"; opa=.5, te=500,word="Resume";
+      $('#replay').hide();
+      var info= $("<div class='info' style='position: absolute; top:170px; left: 120px; width:300px; heigth: 0px; text-align:center; background:linear-gradient(#000, #999 50%, #000); z-index:11;'><h3 style='color: white;'>Goal </h3><p>try to macthes 4 similar items at once  </p></div>");
+      $(".board").append(info);
+      info.animate({height: "200px"},300);
+      pauseGame();
+    }else {
+      t = 220; l= -255; wh = "-=50"; icon="images/pause.png"; opa="1",te=300, word="Pause";
+        $('#replay').show();
+        $(".info").remove();
+      startGame(false);
+    }
+    $(this).animate({
+      top:t,
+      left: l,
+      width: wh,
+      height:wh
+    },te,function(){
+      $(".GameBoard").css({"opacity":opa});
+      $(this).html(word);
+    });
+
+});
+
+$("#replay").click(function(){ //when user click on replay
+  playSounds("click");
+  if($(".confirm").length>0){
+    return;
+  }
+  $('#pausePlay').hide();
+  pauseGame();
+  var bt1 = $("<button class='confirmBts ' style='position: absolute; top:100px; left:45px;'>Yes</button>");
+  var bt2 = $("<button  class='confirmBts ' style='position: absolute; top:100px; left:155px;'>No</button>");
+  var confirm= $("<div class='confirm' style='position: absolute; top:170px; left: 110px; width:300px; heigth: 0px; background:linear-gradient(#000, #999 50%, #000); text-align:center; z-index:10;'><p style='font-size:1em; color:white;'>Are you sure you wanna restart the game?</p></div>");
+  confirm.append(bt1,bt2);
+  $(".board").append(confirm);
+  confirm.animate({height: "200px"},100);
+  bt1.click(function(){
+    playSounds("click");
+    restart();
+    //$('#pausePlay').show();
+    confirm.remove();
+  });
+  bt2.click(function(){
+    playSounds("click");
+    $('#pausePlay').show();
+    startGame(false);
+    confirm.remove();
+  });
+});
+
+function restart(){ // function to restart the game
+  score=0;
+  myTime=0;
+  myMinute=0;
+  $(".timer #seconds").html("00");
+  $(".timer #minute").html("00");
+  $(".scoreBoard span").html("0000");
+  $(".boxes").remove();
+  $(".destroyer2").remove();
+  $(".aPionner").remove();
+  $(".capturedOs").remove();
+  game.initialize();
+  startGame(true);
+}
+
+function startGame(starting){ //function to start the game
+  if(starting){
+    if(allow){startSound.play();}
+    $('#pausePlay').hide();
+    $('#replay').hide();
+    readyTiming();
+  }else {
+   //theTimer = setInterval(function(){ myTime++; $(".timer #seconds").html(myTime);},1000);
+   theTimer = setInterval(manageTimer,1000);
+   gameStarted=true;
+  }
+}
+
+var myMinute=0; // a variable that store  minutes passed
+
+function manageTimer(){ // this function manages the timer by updating it and its view
+ myTime++;
+ if(myTime >59){ myMinute++; myTime=0;}
+ var formatSeconds = myTime<10? "0"+myTime:myTime;
+ var formatMinute = myMinute<10? "0"+myMinute:myMinute;
+  $(".timer #seconds").html(formatSeconds);
+    $(".timer #minute").html(formatMinute);
+}
+
+function readyTiming(){ // this function count from 4 t0 0 before the game start
+  var timingDiv = $("<div class='readyTimer'>4</div>");
+  $(".board").append(timingDiv);
+  var counter=4;
+  var t = setInterval(function(){
+    counter--;
+    $(".readyTimer").html(counter);
+    if(counter <=0){
+      timingDiv.css({"left":"-=100px"});
+      timingDiv.html("Play!");
+      timingDiv.animate({opacity:0.1},1000,function(){timingDiv.remove();});
+       clearInterval(t);
+      gameStarted=true;
+      //theTimer = setInterval(function(){ myTime++; $(".timer #seconds").html(myTime);},1000);
+      theTimer = setInterval(manageTimer,1000);
+      $('#pausePlay').show();
+      $('#replay').show();
+    }
+  },1000);
+}
+
+
+function pauseGame(){ // function paused the game
+  gameStarted=false;
+  clearInterval(theTimer);
+}
+
+$(".sound").click(function(e){ // when user click on the sound button
+  $( ".sound").empty();
+  if($( ".sound")[0].attributes.value.value==="1"){
+      $( ".sound").append("&#x1f507;");
+      $( ".sound")[0].attributes.value.value=0;
+        $( ".sound").tooltip( "option", "content", "It's Off!" );
+        stopAllSounds();
+        allow=false;
+  }else {
+    $( ".sound").append("&#x1f50a;");
+    $( ".sound")[0].attributes.value.value=1;
+    $( ".sound").tooltip( "option", "content", "It's On!" );
+    allow=true;
+
+  }
+});
+
+var dt =["-=100","-=89","-=54","+=100","-=160","+=200","+=200","-=250","+=300"]; // array containing some top position value that will be use by troy to similate the position of an object when it is throw in the air by troy
+var dl =["+=160","+=300","+=230","+=270","+=400","+=340","-=150","+=250","-=90"]; // array containing some left position value that will be use by troy to similate the position of an object when it is throw in the air by troy
+
+function troy(row){ //this function move troy, the tornado effect, to each boxes that it needs to delete. it is an recursive function that constantly animating troy position
+  if(gameStarted){
+    $(".bouclier").show();
+    if(row<=6 && row >=0){
+      var p_top = 600 - (row*70);
+      $("#destroyer").show();
+      $("#destroyer").animate({top:p_top,left:"0px"},300,function(){royer(0,10,100,6,0);});
+      function royer(top,left,t,rep,rep2){
+        $("#destroyer").animate({left:left},t,
+          function(){
+            var id=(game.getGridIndex(rep2,row));
+            $("#"+id).css({"background-image":"url(images/arcturus.png)","z-index":"10"});
+            var rand=Math.floor((Math.random() * 8) + 0);
+            var rand2=Math.floor((Math.random() * 8) + 0);
+            $("#"+id).animate({top:dt[rand], left: dl[rand2]},300);
+            playSounds("supertroy");
+            rep--; rep2++;
+            if(rep===-1){
+              setTimeout(function(){game.destroyGridIndex(row);},1000);
+              $("#destroyer").animate({top:p_top,left:"0px"},300,function(){ $(this).hide();});
+              return;}
+            royer(top,left+70,t,rep,rep2);
+        });
+      }
+    }else {
+      console.log("row does not exist");
+    }
+  }
+}
+
+
+function isGameOver(){ // this function check if all the os where captured, if so, the game is over
+    if($(".capturedOs").length ===6){ // the game is over on win of the user
+      var glory = setInterval(function(){if(welcome.played){ welcome.play(); }},1000);
+      $('.GameBoard').hide();
+      $('.winnerDiv').remove();
+      var div =$("<div class='winnerDiv' style='width: 200px; height: 200px; position: absolute; top:-500px; left:0px; border-radius:100%;'> </div>");
+      $(".board").append(div);
+      div.animate({
+        top:"250px"
+      },
+      300,
+      function(){
+        chakeIt2(div,20,5,function(){openIt(div);});
+      });
+
+    }
+}
+
+function openIt(elt){
+    localStorage.setItem("bestScore", -1);
+  elt.animate({
+    width:"500px",
+    height: "400px",
+    borderRadius: "0px"
+  },500,function(){
+    var text =$("<h1 style='width:inherit; text-align:center; color:white;'>CONGRATULATION!</h1>");
+    var text2 = $("<h3 style='width:inherit; text-align:center; color:white; font-family:Londrina Shadow;'>Your Score: "+score+"</h3>");
+    var text3 = $("<h3 style='width:inherit; text-align:center; color:white;font-family: Londrina Shadow;'>Your Time: "+($(".timer").html())+"</h3>");
+    var bestScore = localStorage.getItem("bestScore");
+    console.log(bestScore );
+    if( score > bestScore || bestScore ===null){
+      if(score > bestScore ){
+        var bestScoreText = $("<h3 style='width:inherit; text-align:center; color:white;font-family: Londrina Shadow;'><img src='images/star.png' style= 'width:45px;'>New Best Score: "+score+"<img src='images/star.png' style= 'width:45px;'></h3>");
+      }else {
+          var bestScoreText = $("<h3 style='width:inherit; text-align:center; color:white;font-family: Londrina Shadow;'>Your First Best Score: "+score+"</h3>");
+      }
+
+      localStorage.setItem("bestScore", score);
+      elt.append(text,bestScoreText,text3);
+    }else {
+
+      var text4 = $("<h3 style='width:inherit; text-align:center; color:white;font-family: Londrina Shadow;'>Best score: "+bestScore+"</h3>");
+      elt.append(text,text2,text3,text4);
+    }
+     var replayButton = $("<button id='winnerReplay'>Replay</button>");
+     replayButton.click(function(){
+       $('.GameBoard').css({"opacity":"1"});
+       restart();
+       $(".winnerDiv").remove();
+     });
+       elt.append(replayButton);
+  });
+}
+
+function chakeIt2(id,l,density,callBack){
+  console.log(l);
+  if(l <=0){
+    callBack();
+    return;
+  }
+  $(id).animate({
+    top:"-="+l+"px"
+  },55,function(){
+         $(id).animate({
+            top:"+="+l+"px"
+          },55,function(){
+            l= l -density;
+            chakeIt2(id,l,density,callBack);
+          });
+      }
+ );
+}
+
+$(".timer").click(function(){
+  clearInterval(theTimer);
+  gameStarted=false;
+  var glory = setInterval(function(){if(endmusic.played && allow){ endmusic.play(); }},1000);
+  $('.GameBoard').css({"opacity":"0.3"});
+  $('.winnerDiv').remove();
+  var div =$("<div class='winnerDiv' style='width: 200px; height: 200px; position: absolute; top:-500px; left:0px; border-radius:100%;'> </div>");
+  $(".board").append(div);
+  div.animate({
+    top:"200px"
+  },300,function(){
+    chakeIt2(div,20,5,function(){openIt(div);});
+    //openIt(div);
+  });
+});
+
+game.initialize();
+
+  </script>
+</body>
+</html>
