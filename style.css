@@ -1,0 +1,132 @@
+
+
+.box {
+  width: auto;
+  height: 800px;
+}
+
+.android {
+  position: fixed;
+  top: 10%;
+  left:5%;
+  display: none;
+  transform: rotate(-20deg);
+}
+
+.apple {
+  position: fixed;
+  top: 10%;
+  left:85%;
+  display: none;
+  transform: rotate(20deg);
+
+}
+
+.linux {
+  position: fixed;
+  top: 45%;
+  left: 10%;
+  display: none;
+  transform: rotate(20deg);
+}
+
+.freebsd {
+  position: fixed;
+  top: 75%;
+  left:5%;
+  display: none;
+  transform: rotate(-20deg);
+}
+
+.windows {
+  position: fixed;
+  top: 45%;
+  left:75%;
+  display: none;
+
+}
+
+.ubuntu {
+  position: fixed;
+  top: 75%;
+  left:85%;
+  display: none;
+}
+
+.background {
+  background-image: url("images/page1.png");
+  width: 20000px;
+  height: 20000px;
+  margin: auto;
+  /*opacity: 0.6;*/
+  filter: blur(2px);
+  position: fixed;
+  margin-top: -300px;
+}
+
+.welcome {
+
+  text-align: center;
+  font-size: 2em;
+  text-shadow: 2px 4px gray;
+  color: #4df6ff;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 60px;
+  letter-spacing: -1px;
+  line-height: 1;
+  filter: url(#cracked)
+  /*border: 1px solid white;*/
+}
+
+.btn button {
+
+  position:fixed;
+  top:65%;
+  left:36%;
+  background: #999;
+  border: 3px solid #0ff;
+  border-radius: 999px;
+  box-shadow: 1px 0 0 0 #444;
+  color: white;
+  padding: 8px 26px;
+  font: normal 700 50px 'Helvetica Neue', sans-serif;
+  text-align: center;
+  text-shadow: 2px 2px 0 #000;
+  margin-top: 700px;
+  margin: 0 auto;
+  cursor: pointer;
+  z-index:10;
+
+}
+
+.btn button:hover {
+  background-color: darkgray;
+  color: #0ff;
+}
+
+#logo{
+  position: fixed;
+  top: 5%;
+  left:15%;
+}
+
+body{
+  background-color: black;
+}
+.ctn{
+
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+.gameHint{
+  position: fixed;
+  top: 35%;
+  left:35%;
+  width: 400px;
+  height:200px;
+  text-align: center;
+  background: linear-gradient(#000, #999 50%, #000);
+  border: 3px solid #0ff;
+  border-radius: 30px;
+}
