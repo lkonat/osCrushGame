@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+<head>
+<style media="screen">
+  td {
+ border-collapse: collapse;
+ border: 1px solid grey;
+ width: 1200px;
+ padding-left: 5px;
+ text-align: center;
+}
+
+h1 {
+color:rgb(200,100,100);
+font-family: 'Helvetica Neue', sans-serif;
+font-size: 55px;
+font-weight: bold;
+letter-spacing: -1px;
+line-height: 1;
+width: 100%;
+text-align: center;
+}
+
+p {
+font-family: 'Helvetica Neue', sans-serif;
+
+}
+.rh{
+
+  font-size: 2em;
+}
+body{
+  background: linear-gradient(#000, #999 50%);
+  color: black;;
+}
+em{
+  color: lightgreen;
+  font-size: 1.2em;
+}
+.listener{
+  color: green;
+}
+.mainDiv{
+  width: 100%;
+  text-align: center;
+
+}
+table{
+  margin: 0 auto;
+}
+</style>
+</head>
+<body>
+  <h1 > OS CRUSH API  </h1>
+  <h1 > oscrush.js  </h1>
+  <p>OS Crusher implements a really fun and addictive game. It is very similiar to the
+    popular Candy Crush Saga. There is a seperate module that implements the
+    OS Crusher functionality. The OS Crusher module can be accessed through a global variable named
+  <span style="color:rgb(200,100,100); font-size:1.2em;">game</span>. Example: <span style="color:rgb(200,100,100); font-size:1.2em;">game</span>.<em>initialize()</em> will initialize the game.
+  </p><p>Inside this global variable we have the following functions available:<p>
+<div class="mainDiv">
+<table>
+  <tr><th class='rh'>Function Name</th>
+      <th  class='rh'>Parameters</th>
+      <th  class='rh'>Return Value</th>
+      <th  class='rh'>Description</th>
+    </tr>
+    <tr>
+      <td><em>initialize<em></td>
+      <td><b>None</b></td>
+      <td><b>None</b></td>
+      <td>This function initializes the grid</td>
+    </tr>
+    <tr>
+      <td><em>addListener<em></td>
+      <td><b>callback:</b> provides a callback function to be called
+          <br><b>type of listener</b>: provides the type of listener</td>
+      <td><b>None</b></td>
+      <td>This function adds a listener and provides a callback function that will be called.
+          <br>List of Listeners:
+          <br><b class="listener">"drawGrid"</b>: to represent the grid as images of icons <br>
+          <br><b class="listener">"updateABox"</b>: to update elements position in the view according to the change made in the grid by the model<br>
+          <br><b class="listener">"drawNewBox"</b>: to draw new icons created<br>
+          <br><b class="listener">"deleted"</b>: to update view when the model deletes elements<br>
+          <br><b class="listener">"pioneer"</b>: to provide the pioneer destructive effect listener, blast all the same kind<br>
+          <br><b class="listener">"troy"</b>: to provide the troy destructive effect listener, tornado<br>
+          <br><b class="listener">"bouclier"</b>:to provide the shield listener, when we want to avoid user from moving element around while the game is busy , it avoids error.<br>
+          <b class="listener">"soundListenner"</b> to provide the sounds effects </td>
+    </tr>
+    <tr>
+      <td><em>checkGrid<em></td>
+      <td><b>boolean true</b></td>
+      <td><b>boolean</b></td>
+      <td>This function checks the grid to see if there are any matches. It will return true
+          when matches are found or false otherwise.  It does not change or delete anything from the grid.</td>
+    </tr>
+    <tr>
+      <td><em>checkGrid<em></td>
+      <td><b>none</b> or <b>boolean false</b></td>
+      <td><b>boolean</b></td>
+      <td>This function checks the grid to see if there are any matches. It will return
+          true when matches find or false otherwise.  It does change the grid
+          by deleting the matches.</td>
+    </tr>
+    <tr>
+      <td><em>checkVerticals<em></td>
+      <td><b>elt:</b> provides the identification number of the element we are searching
+      <br><b>row:</b> is the row to check
+      <br><b>column:</b> is the column where the element  is.</td>
+      <td><b>An object with a count of the element, its row, and its column</b></td>
+      <td>This function looks for elements that are repeating more than 2 times
+          in a row/column. It will return an object with a count of how many times the
+          element is repeating, its row, and its column.</td>
+    </tr>
+    <tr>
+      <td><em>checkHorizontals<em></td>
+      <td><b>elt:</b> provides the identification number of the element we are searching matches
+      <br><b>row:</b> is the row to check
+      <br><b>column:</b> is the column where the element  is.</td>
+      <td><b>An object with a count of the element, its row, and its column</b></td>
+      <td>This function looks for any elements that are repeating more than 2 times
+          in a row from an element to its right side. It returns an object with
+          a count of how many time the element is repeating, its row, and its column.
+      </td>
+    </tr>
+    <tr>
+      <td><em>destroyGridIndex<em></td>
+      <td><b>top:</b> provides the row
+      <br><b>left:<b> provides the column</td>
+      <td><b>None</b></td>
+      <td>This function can be called by the view to delete a specific index
+          from a row inside the grid</td>
+    </tr>
+    <tr>
+      <td><em>getGridIndex<em></td>
+      <td><b>id</b>: provides the identification of the element.</td>
+      <td><b>None</b></td>
+      <td>This function returns the id of a specific location in the grid</td>
+    </tr>
+    <tr>
+      <td><em>findLocationOf<em></td>
+      <td><b>id:</b> provides the identification of the element.</td>
+      <td><b>False or an object containing the positions, row, and column.<b></td>
+      <td>This function can find the position of the element pass to it if they exist on the board</td>
+    </tr>
+    <tr>
+      <td><em>deleteDone<em></td>
+      <td><b>ids:</b> provides the identification of the element removed.</td>
+      <td><b>None</b></td>
+      <td>This is a function that will be called when the view is done deleting elements</td>
+    </tr>
+    <tr>
+      <td><em>tryMoveClick<em></td>
+      <td><b>ids:</b> provides the identification of the element</td>
+      <td><b>None</b></td>
+      <td>This function will check if a movement is legal and updates the view</td>
+    </tr>
+    <tr>
+      <td><em>tryMoveDrag<em></td>
+      <td><b>ids:</b> provides the identification of the element</td>
+      <td><b>None</b></td>
+      <td>This function checks if a movement is legal after a drag, and updates the view</td>
+    </tr>
+    <tr>
+      <td><em>deleteAll<em></td>
+      <td><b>type:</b> provides the type of the element. For example 0 is for android</td>
+      <td><b>None</b></td>
+      <td>This function deletes all of the types of a specific element from the game</td>
+    </tr>
+    <tr>
+      <td><em>deleteAll<em></td>
+      <td><b>None</b></td>
+      <td><b>None</b></td>
+      <td>This function deletes all of the elements from the game</td>
+    </tr>
+</table>
+</div>
+<br>
+<body>
+</html>
